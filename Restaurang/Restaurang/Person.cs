@@ -8,6 +8,6 @@ namespace Restaurang
 {
     internal class Person
     {
-        public string Name { get; set; }
+        public string N_A_M_N { get; set; }
     }
 }
