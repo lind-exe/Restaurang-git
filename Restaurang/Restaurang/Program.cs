@@ -4,17 +4,12 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Restorang");
+            Restaurant restaurant = new Restaurant(80);
 
-            Console.WriteLine("Då har vi gjort klart våran tutorial");
-
-            Console.WriteLine("Writeline test 27oktober");
-
-            Console.WriteLine("Hej");
-
-            Console.WriteLine("Skriva ut restaurang");
-
-            Console.WriteLine("Min tur /Maja");
+            foreach (Person person in restaurant.Guests)
+            {
+                Console.WriteLine(person.Name);
+            }
         }
     }
 }
