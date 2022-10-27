@@ -4,8 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Utskrift();
+            //Utskrift();
             
+            TestGuest testGuest = new TestGuest();
+
+            testGuest.PrintMe();
 
             
             //person.Groups();
