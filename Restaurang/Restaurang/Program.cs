@@ -5,15 +5,17 @@
         static void Main(string[] args)
         {
             Restaurant restaurant = new Restaurant(80);
+            Guest person = new Guest();
 
-            List<Person> company = new List<Person>();
+            
 
-            foreach (Person person in restaurant.Guests)
-            {
-                Console.WriteLine(person.Name);
+            //foreach (Person person in restaurant.Guests)
+            //{
+            //    Console.WriteLine(person.Name);
 
-                company.Add();
-            }
+
+            //}
+            person.Groups();
         }
     }
 }
