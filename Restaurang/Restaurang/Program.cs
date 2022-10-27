@@ -11,6 +11,8 @@
             Console.WriteLine("Writeline test 27oktober");
 
             Console.WriteLine("Hej");
+
+            Console.WriteLine("Skriva ut restaurang");
         }
     }
 }
