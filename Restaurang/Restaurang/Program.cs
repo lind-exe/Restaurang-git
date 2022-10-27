@@ -7,6 +7,8 @@
             Console.WriteLine("Restorang");
 
             Console.WriteLine("Då har vi gjort klart våran tutorial");
+
+            Console.WriteLine("Writeline test 27oktober");
         }
     }
 }
