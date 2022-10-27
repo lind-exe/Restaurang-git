@@ -17,10 +17,11 @@ namespace Restaurang
         {
             Name = LastName();
         }
-        private static string LastName()
+
+        private static void Groups()
         {
-            string[] lastnames =
-            {
+            string[] lastNames =
+           {
                 "Andersson",
                 "Johansson",
                 "Karlsson",
@@ -123,9 +124,137 @@ namespace Restaurang
                 "Jonasson"
             };
             Random rnd = new Random();
-            int index = rnd.Next(0, lastnames.Length - 1);
+            int g = rnd.Next(1, 4);
 
-            return lastnames[index];
+            for (int i = 0; i < g; i++)
+            {
+                string[] group = { lastNames[i], lastNames[i + g] };
+
+                Array.Sort(group);
+
+                Console.WriteLine("Grupp " + (i + 1) + ":");
+                for (int j = 0; j < group.Length; j++)
+                {
+                    Console.WriteLine(group[j]);
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+        private static string LastName()
+        {
+            string[] lastNames =
+            {
+                "Andersson",
+                "Johansson",
+                "Karlsson",
+                "Nilsson",
+                "Eriksson",
+                "Larsson",
+                "Olsson",
+                "Persson",
+                "Svensson",
+                "Gustafsson",
+                "Pettersson",
+                "Jonsson",
+                "Jansson",
+                "Hansson",
+                "Bengtsson",
+                "Jönsson",
+                "Lindberg",
+                "Jakobsson",
+                "Magnusson",
+                "Olofsson",
+                "Lindström",
+                "Lindqvist",
+                "Lindgren",
+                "Axelsson",
+                "Berg",
+                "Bergström",
+                "Lundberg",
+                "Lind",
+                "Lundgren",
+                "Lundqvist",
+                "Mattsson",
+                "Berglund",
+                "Fredriksson",
+                "Sandberg",
+                "Henriksson",
+                "Forsberg",
+                "Sjöberg",
+                "Wallin",
+                "Ali",
+                "Engström",
+                "Mohamed",
+                "Eklund",
+                "Danielsson",
+                "Lundin",
+                "Håkansson",
+                "Björk",
+                "Bergman",
+                "Gunnarsson",
+                "Holm",
+                "Wikström",
+                "Samuelsson",
+                "Isaksson",
+                "Fransson",
+                "Bergqvist",
+                "Nyström",
+                "Holmberg",
+                "Arvidsson",
+                "Löfgren",
+                "Söderberg",
+                "Nyberg",
+                "Blomqvist",
+                "Claesson",
+                "Nordström",
+                "Mårtensson",
+                "Lundström",
+                "Ahmed",
+                "Viklund",
+                "Björklund",
+                "Eliasson",
+                "Pålsson",
+                "Hassan",
+                "Berggren",
+                "Sandström",
+                "Lund",
+                "Nordin",
+                "Ström",
+                "Åberg",
+                "Hermansson",
+                "Ekström",
+                "Falk",
+                "Holmgren",
+                "Dahlberg",
+                "Hellström",
+                "Hedlund",
+                "Sundberg",
+                "Sjögren",
+                "Ek",
+                "Blom",
+                "Abrahamsson",
+                "Martinsson",
+                "Öberg",
+                "Andreasson",
+                "Strömberg",
+                "Månsson",
+                "Åkesson",
+                "Hansen",
+                "Norberg",
+                "Lindholm",
+                "Dahl",
+                "Jonasson"
+            };
+
+            Random rnd = new Random();
+            
+            int index = rnd.Next(0, lastNames.Length - 1);
+
+            return lastNames[index];
+
+
         }
     }
 
