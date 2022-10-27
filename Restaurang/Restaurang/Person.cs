@@ -142,6 +142,8 @@ namespace Restaurang
         public double AmountOfMoney { get; set; }
         public int Satisfaction { get; set; }
 
+        public int AmountOfCompany { get; set; }
+
         public bool Eating { get; set; }
 
         public int EatingTime { get; set; }
@@ -152,6 +154,8 @@ namespace Restaurang
         public Guest()
         {
             Company = new List<Person>();
+            Random rnd = new Random();
+            AmountOfMoney = rnd.Next(100, 1001);
 
         }
 
@@ -315,6 +319,8 @@ namespace Restaurang
             }
 
         }
+
+
         public void EatingGuest()
         {
             if (Eating == false && FinishedEating == false)
@@ -345,7 +351,8 @@ namespace Restaurang
 
         public Chef()
         {
-
+            Random rnd = new Random();
+            Skills = rnd.Next(0, 6);
         }
 
     }
@@ -355,7 +362,8 @@ namespace Restaurang
         public int ServiceLevel { get; set; }
         public Waiter()
         {
-
+            Random rnd = new Random();
+            ServiceLevel = rnd.Next(0, 6);
         }
 
     }
