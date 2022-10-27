@@ -13,6 +13,8 @@
             Console.WriteLine("Hej");
 
             Console.WriteLine("Skriva ut restaurang");
+
+            Console.WriteLine("Min tur /Maja");
         }
     }
 }
