@@ -4,11 +4,14 @@
     {
         static void Main(string[] args)
         {
+            TableGraphics tables = new TableGraphics();
+            tables.DrawFrame();
+                      
             //Utskrift();
             
             TestGuest testGuest = new TestGuest();
 
-            testGuest.PrintMe();
+            //testGuest.PrintMe();
 
             
             //person.Groups();

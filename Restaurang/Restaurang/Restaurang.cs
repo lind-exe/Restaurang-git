@@ -27,6 +27,11 @@ namespace Restaurang
             CreateStaff();
         }
 
+        public Restaurant()
+        {
+
+        }
+
         private void CreateGuests()
         {
             Guests = new List<Person>();
@@ -69,6 +74,8 @@ namespace Restaurang
             //}
 
         }
+
+        
 
     }
 }
