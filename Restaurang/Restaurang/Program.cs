@@ -11,6 +11,8 @@
             
             TestGuest testGuest = new TestGuest();
 
+            Menu menu = new Menu();
+
             //testGuest.PrintMe();
 
             
