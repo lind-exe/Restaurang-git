@@ -8,8 +8,13 @@ namespace Restaurang
 {
     internal class Menu
     {
-        List<Dish> menus = new List<Dish>();
-    }
+        List<Dish> menu = new List<Dish>
+        {
+            new MeatDish("Korv och mos", 20),
+            new FishDish("Sushi", 80),
+            new VegoDish("Vegoschnitzel med pommes", 50)
+        };
+    } // Slut Menu
     internal class Dish
     {
         internal string Name { get; set; }
@@ -19,24 +24,27 @@ namespace Restaurang
             Name = name;
             Price = price;
         }
-        internal class MeatDish : Dish
+    } // Slut Dish
+
+    internal class MeatDish : Dish
+    {
+        internal MeatDish(string name, int price) : base(name, price)
         {
-            internal MeatDish(string name, int price) : base(name, price)
-            {
-            }
         }
-        internal class FishDish : Dish
+    } // Slut MeatDish
+
+    internal class FishDish : Dish
+    {
+        internal FishDish(string name, int price) : base(name, price)
         {
-            internal FishDish(string name, int price) : base(name, price)
-            {
-            }
         }
-        internal class VegoDish : Dish
+    } // Slut FishDish
+
+    internal class VegoDish : Dish
+    {
+        internal VegoDish(string name, int price) : base(name, price)
         {
-            internal VegoDish(string name, int price) : base(name, price)
-            {
-            }
         }
-    }
+    } // Slut VegoDish
 }
 
