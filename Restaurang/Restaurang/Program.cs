@@ -13,6 +13,8 @@
 
             Menu menu = new Menu();
 
+            menu.PrintMe();
+
             //testGuest.PrintMe();
 
             

@@ -15,6 +15,28 @@ namespace Restaurang
             new VegoDish("Vegoschnitzel med pommes", 50, new string[]{}),
             new FishDish("Fiskgratäng", 50, new string[]{"laktos","fisk"})
         };
+        internal void PrintMe()
+        {
+            Console.WriteLine("Kötträtter:");
+            foreach (Dish d in dishes)
+                if (d is MeatDish)
+                {
+                    d.PrintMe();
+                }
+            Console.WriteLine("\nFiskrätter:");
+            foreach (Dish d in dishes)
+                if (d is FishDish)
+                {
+                    d.PrintMe();
+                }
+            Console.WriteLine("\nVegorätter:");
+            foreach (Dish d in dishes)
+                if (d is VegoDish)
+                {
+                    d.PrintMe();
+                }
+
+        }
     } // Slut Menu
     internal class Dish
     {
@@ -26,6 +48,16 @@ namespace Restaurang
             Name = name;
             Price = price;
             Allergenes = allergenes;
+        }
+        internal void PrintMe()
+        {
+            Console.WriteLine(Name + " " + Price + " kr");
+            Console.Write("Allergener: ");
+            foreach (string s in Allergenes)
+            {
+                Console.Write(s + " ");
+            }
+            Console.WriteLine();
         }
     } // Slut Dish
 
