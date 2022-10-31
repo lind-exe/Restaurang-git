@@ -6,24 +6,35 @@ using System.Threading.Tasks;
 
 namespace Restaurant
 {
-    internal class Person
+    internal class Guest : Person
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
+        //public int AmountOfCompany { get; set; }
+        public double AmountOfMoney { get; set; }
+        public int Satisfaction { get; set; }
+
+        public int AmountOfCompany { get; set; }
+
+        public bool Eating { get; set; }
+
+        public int EatingTime { get; set; }
+        public bool FinishedEating { get; set; }
+        public List<Person> Company { get; set; }
 
 
-
-        public Person()
+        public Guest()
         {
-            Name = LastName();
+            Company = new List<Person>();
+            Random rnd = new Random();
+            AmountOfMoney = rnd.Next(100, 1001);
+
         }
 
-
-
-        private static string LastName()
+        public void Groups()
         {
-            string[] lastNames =
-            {
+            List<string> lastNames = new List<string>();
+
+            string[] lastNames2 =
+           {
                 "Andersson",
                 "Johansson",
                 "Karlsson",
@@ -126,14 +137,81 @@ namespace Restaurant
                 "Jonasson"
             };
 
-            Random rnd = new Random();
+            lastNames.AddRange(lastNames2.ToList());
 
-            int index = rnd.Next(0, lastNames.Length - 1);
 
-            return lastNames[index];
 
+            //for (int i = 0; i <= lastNames.Count; i++)
+            //{
+            //    Random rnd = new Random();
+            //    int g = rnd.Next(0, 4);
+
+            //    foreach (var person in lastNames)
+            //    {
+            //        for (int j = 0; j < g; j++)
+            //        {
+            //            Company.Add(person);
+            //        }
+
+            //    }
+
+            //    Console.WriteLine("Grupp " + (i + 1) + ":");
+            //    for (int j = 0; j < group.Length; j++)
+            //    {
+            //        Console.WriteLine(group[j]);
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            int amountOfGroups = lastNames.Count / 2;
+
+            for (int i = 0; i < amountOfGroups; i++) //loopa så länge i är mindre än antalet grupper
+            {
+
+                Random rnd = new Random();
+                int g = rnd.Next(0, 4); //g var antal gruppmedlemmar
+
+                string[] group = new string[g];
+
+
+                for (int j = 0; j < group.Length; j++)
+                {
+                    group[j] = lastNames[j * amountOfGroups + i];
+                }
+
+                Console.WriteLine("Grupp " + (i + 1) + ":");
+                for (int j = 0; j < group.Length; j++)
+                {
+                    Console.WriteLine(group[j]);
+                }
+                Console.WriteLine();
+
+            }
 
         }
-    }
 
+
+        public void EatingGuest()
+        {
+            if (Eating == false && FinishedEating == false)
+            {
+                Eating = true;
+            }
+        }
+
+        public void TimeToEat()
+        {
+            if (Eating == true)
+            {
+
+                EatingTime++;
+            }
+            if (EatingTime == 20)
+            {
+                FinishedEating = true;
+                Eating = false;
+            }
+        }
+
+    }
 }

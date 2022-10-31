@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurang
+namespace Restaurant
 {
     internal class Restaurant
     {
@@ -51,7 +51,7 @@ namespace Restaurang
             Chefs = new List<Person>();
 
             Waiters = new List<Person>();
-            
+
             for (int i = 0; i < 3; i++)
             {
                 Chef chef = new Chef();
@@ -75,7 +75,7 @@ namespace Restaurang
 
         }
 
-        
+
 
     }
 }

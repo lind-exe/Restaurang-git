@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurang
+namespace Restaurant
 {
     internal class TableGraphics
     {
@@ -25,7 +25,7 @@ namespace Restaurang
                 for (int tablePerLine = 0; tablePerLine < 3; tablePerLine++)
                 {
                     //Sätt tablenumber till en property så det inte blir hårdkodat!
-                    string tableNumber = (tablePerLine + 1 + ""/*+ "" + tablePerLine*/);
+                    string tableNumber = tablePerLine + 1 + ""/*+ "" + tablePerLine*/;
 
                     //Här ska gästerna in   /*+ occupant.PadRight(9, '.')*/
                     //string occupant = (occupants[line, tablePerLine] == null) ? "Tomt" : occupants[line, tablePerLine];
@@ -68,7 +68,7 @@ namespace Restaurang
                 for (int tablePerLine = 0; tablePerLine < 3; tablePerLine++)
                 {
                     //Sätt tablenumber till en property så det inte blir hårdkodat!
-                    string tableNumber = (tablePerLine + 1 + ""/*+ "" + tablePerLine*/);
+                    string tableNumber = tablePerLine + 1 + ""/*+ "" + tablePerLine*/;
 
                     //Här ska gästerna in   /*+ occupant.PadRight(9, '.')*/
                     //string occupant = (occupants[line, tablePerLine] == null) ? "Tomt" : occupants[line, tablePerLine];

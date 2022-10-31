@@ -1,14 +1,14 @@
-﻿namespace Restaurang
+﻿namespace Restaurant
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             TableGraphics tables = new TableGraphics();
-            tables.DrawFrame();
-            //Provar ändra i båda namespaces 2r223r2r23r
-            //Utskrift();
             
+            
+            //Utskrift();
+
             TestGuest testGuest = new TestGuest();
 
             Menu menu = new Menu();
@@ -17,7 +17,7 @@
 
             //testGuest.PrintMe();
 
-            
+
             //person.Groups();
         }
         public static void Utskrift()
