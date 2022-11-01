@@ -8,8 +8,16 @@ namespace Restaurant
 {
     internal class Restaurant
     {
+        public int TotalGuests { get; set; }
         public int GuestAmount { get; set; }
-
+        public int ChefAmount { get; set; }
+        public int WaiterAmount { get; set; }
+        public int DuoTableAmount { get; set; }
+        public int QuadTableAmount { get; set; }
+        public int TimeCounter { get; set; }
+        public int GuestsInRestaurant { get; set; }
+        public List<string> NewsFeed { get; set; }
+        public List<string> Menu { get; set; }
 
         public List<Person> Guests { get; set; }
 

@@ -8,6 +8,8 @@ namespace Restaurant
 {
     internal class Chef : Person
     {
+        public List<Menu> WorkOrder = new List<Menu>();
+
         public int Skills { get; set; }
 
         public Chef()

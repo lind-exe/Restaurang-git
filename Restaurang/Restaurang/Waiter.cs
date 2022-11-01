@@ -8,6 +8,8 @@ namespace Restaurant
 {
     internal class Waiter : Person
     {
+        public List<Menu> Orders = new List<Menu>();
+
         public int ServiceLevel { get; set; }
         public Waiter()
         {

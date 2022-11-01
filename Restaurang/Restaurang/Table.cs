@@ -13,9 +13,10 @@ namespace Restaurant
         public int Quality { get; set; }
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; }
+        public int TipCounter { get; set; }     //osäkert vart denna ska ligga.
 
-        //public List<string> ThingsOnTable { get; set; }
-        
+        //public List<string> ThingsOnTable { get; set; }  //inväntar onsdagens lektion innan vi går vidare med detta.
+
 
 
 
