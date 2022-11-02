@@ -10,8 +10,8 @@ namespace Restaurant
 {
     internal class Food
     {
-        internal string Name { get; set; }
-        internal double Price { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
 
 
         public Food(string name, double price)
@@ -19,6 +19,10 @@ namespace Restaurant
         {
             Name = name;
             Price = price;
+        }
+        public Food()
+        {
+
         }
 
 
@@ -41,7 +45,11 @@ namespace Restaurant
             {
             }
         }
+        //internal void PrintMe()
+        //{
+        //    Console.WriteLine(Name + " " + Price + " kr");           
+        //    Console.WriteLine();
+        //}
 
-       
     }
 }

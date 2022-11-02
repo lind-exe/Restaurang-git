@@ -8,9 +8,10 @@
 
             TestGuest testGuest = new TestGuest();
 
-            testGuest.PrintMe();
+            //testGuest.PrintMe();
 
             restaurant.PrintFood();
+            restaurant.PrintPeople();
 
             
         }

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static Restaurant.Food;
 
 namespace Restaurant
 {
@@ -18,18 +21,11 @@ namespace Restaurant
         public int GuestsInRestaurant { get; set; }
         public List<string> NewsFeed { get; set; }
         public List<Food> Menu { get; set; }
-
-        public  int MeatAmount { get; set; }
-
-        public int FishAmount { get; set; }
-
-        public int VegoAmount { get; set; }
-
+        public List<Person> PeopleInRestaurant { get; set; }
+       
         //public List<Person> Guests { get; set; }
 
         //public List<Person> StaffList { get; set; }           Tanke om man skulle ha en samlad lista med all personal. Fick det inte att fungera //J
-
-        public List<Person> PeopleInRestaurant { get; set; }
 
         //public List<Person> Chefs { get; set; }
 
@@ -40,6 +36,7 @@ namespace Restaurant
             ChefAmount = chefAmount;
             WaiterAmount = waiterAmount;
             MakePeopleInRestaurant();
+            MakeMenu();
             DuoTableAmount = duoTableAmount;
             QuadTableAmount = quadTableAmount;
             TimeCounter = 0;
@@ -52,7 +49,6 @@ namespace Restaurant
         {
 
         }
-
 
         private void MakePeopleInRestaurant()
         {
@@ -78,55 +74,114 @@ namespace Restaurant
         }
 
 
-        private void MakeMenu()
+        public void MakeMenu()
         {
             Menu = new List<Food>
+            {
+                new Meat("Plankstek", 339),
+                new Meat("Pasta Carbonara", 229.50),
+                new Meat("Fläskfilé", 289.50),
+                new Fish("Sushi", 198.90),
+                new Fish("Fiskgratäng", 209.50),
+                new Fish("Panerad rödspätta", 229),
+                new Vego("Vegoschnitzel med pommes", 199),
+                new Vego("Kronärtskockspizza", 179.50),
+                new Vego("Vegetarisk bolognese (linser)", 239)
+            };
+        }
 
+        internal void PrintPeople()
         {
-            new Food.Meat("Plankstek", 339),
-            new Food.Meat("Pasta Carbonara", 229.50),
-            new Food.Meat("Fläskfilé", 289.50),
-            new Food.Fish("Sushi", 198.90),
-            new Food.Fish("Fiskgratäng", 209.50),
-            new Food.Fish("Panerad rödspätta", 229),
-            new Food.Vego("Vegoschnitzel med pommes", 199),
-            new Food.Vego("Kronärtskockspizza", 179.50),
-            new Food.Vego("Vegetarisk bolognese (linser)", 239)
-
-        };
+            Console.WriteLine("**GÄSTER**");
+            foreach (Person p in PeopleInRestaurant)
+                if (p is Guest)
+                {
+                    Console.WriteLine(p.Name);
+                    //Console.WriteLine();
+                }
+            Console.WriteLine("\n**SERVERINGSPERSONAL**");
+            foreach (Person p in PeopleInRestaurant)
+                if (p is Waiter)
+                {
+                    Console.WriteLine(p.Name);
+                    //Console.WriteLine();
+                }
+            Console.WriteLine("\n**KOCKAR**");
+            foreach (Person p in PeopleInRestaurant)
+                if (p is Chef)
+                {
+                    Console.WriteLine(p.Name);
+                    //Console.WriteLine();
+                }
         }
 
         internal void PrintFood()
         {
-            Console.WriteLine("Kötträtter:");
-            foreach (Food m in Menu)
-                if (m is Food.Meat)
+            Console.WriteLine("**KÖTTRÄTTER**");
+            foreach (Food d in Menu)
+                if (d is Meat)
                 {
-                    Console.WriteLine(m.Name + " " +  m.Price);
+                    Console.WriteLine(d.Name + " " + d.Price + " kr");
+                    //Console.WriteLine();
                 }
-            Console.WriteLine("\nFiskrätter:");
-            foreach (Food f in Menu)
-                if (f is Food.Fish)
+            Console.WriteLine("\n**FISKRÄTTER**");
+            foreach (Food d in Menu)
+                if (d is Fish)
                 {
-                    Console.WriteLine(f.Name + " " + f.Price);
+                    Console.WriteLine(d.Name + " " + d.Price + " kr");
+                    //Console.WriteLine();
                 }
-            Console.WriteLine("\nVegorätter:");
-            foreach (Food v in Menu)
-                if (v is Food.Vego)
+            Console.WriteLine("\n**VEGETARISKA RÄTTER**");
+            foreach (Food d in Menu)
+                if (d is Vego)
                 {
-                    Console.WriteLine(v.Name + " " + v.Price);
+                    Console.WriteLine(d.Name + " " + d.Price + " kr");
+                    //Console.WriteLine();
                 }
 
+
+            Console.WriteLine();
+
+            //foreach (Food food in Menu)
+            //{
+            //    Console.WriteLine(food.Name + " - " + food.Price + " kr");
+            //}
+
+            //Console.WriteLine();
+
+            //foreach (Food food in Menu)
+            //{
+            //    if (food is Meat)
+            //    {
+            //        Console.Write("Kötträtter: ");
+            //        Console.WriteLine(food.Name + " " + food.Price);
+            //    }
+
+            //    if (food is Fish)
+            //    {
+            //        Console.Write("Fiskrätter: ");
+            //        Console.WriteLine(food.Name + " " + food.Price);
+            //    }
+
+            //    if (food is Vego)
+            //    {
+            //        Console.Write("Vegetariska rätter: ");
+            //        Console.WriteLine(food.Name + " " + food.Price);
+            //    }
+            //    Console.WriteLine();
+            //}
+
         }
+
 
 
     }
 }
 
-        
-        
 
-        
+
+
+
 
 
 
