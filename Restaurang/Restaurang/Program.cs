@@ -10,9 +10,9 @@
 
             //testGuest.PrintMe();
 
-            restaurant.PrintFood();
-            restaurant.PrintPeople();
-
+            //restaurant.PrintFood();
+            //restaurant.PrintPeople();
+            restaurant.MakeGuests();
             
         }
 
