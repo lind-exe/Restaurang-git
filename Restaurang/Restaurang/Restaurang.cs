@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static Restaurant.Food;
+using static Restaurant.Person;
 
 namespace Restaurant
 {
@@ -50,10 +52,17 @@ namespace Restaurant
 
         }
 
+        //skapa queue med gäster
+
+        //ha en forloop som räknar från 0 - rnd. i loopen har vi en lista med sällskap och gör en dequeue på peopleinrest. rnd ggr.
+        //Det sparar och addas till en lista av gäster, som stoppas in i en dictionary av bord
+
+        //skapa en dictionary med bord
+
         private void MakePeopleInRestaurant()
         {
             PeopleInRestaurant = new List<Person>();
-
+            Random rnd = new Random();
             for (int i = 0; i < GuestAmount; i++)
             {
                 Person guest = new Guest();
@@ -95,22 +104,22 @@ namespace Restaurant
             Console.WriteLine("**GÄSTER**");
             foreach (Person p in PeopleInRestaurant)
                 if (p is Guest)
-                {
-                    Console.WriteLine(p.Name);
+                {                                           
+                    Console.WriteLine(p.Name + " som har " + ((Guest)p).AmountOfMoney + " kr i plånboken");
                     //Console.WriteLine();
                 }
             Console.WriteLine("\n**SERVERINGSPERSONAL**");
             foreach (Person p in PeopleInRestaurant)
                 if (p is Waiter)
                 {
-                    Console.WriteLine(p.Name);
+                    Console.WriteLine(p.Name + " som har " + ((Waiter)p).ServiceLevel + " i servicenivå");
                     //Console.WriteLine();
                 }
             Console.WriteLine("\n**KOCKAR**");
             foreach (Person p in PeopleInRestaurant)
                 if (p is Chef)
                 {
-                    Console.WriteLine(p.Name);
+                    Console.WriteLine(p.Name + " som har " + ((Chef)p).Skills + " i kompetens");
                     //Console.WriteLine();
                 }
         }

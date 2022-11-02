@@ -18,7 +18,7 @@ namespace Restaurant
         public Chef()
         {
             Random rnd = new Random();
-            Skills = rnd.Next(0, 6);
+            Skills = rnd.Next(1, 6);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Restaurant
         public Waiter()
         {
             Random rnd = new Random();
-            ServiceLevel = rnd.Next(0, 6);
+            ServiceLevel = rnd.Next(1, 6);
         }
 
         //public string TakeOrder(Guest guest)

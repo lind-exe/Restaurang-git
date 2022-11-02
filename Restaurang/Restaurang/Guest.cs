@@ -25,7 +25,7 @@ namespace Restaurant
         {
             Company = new List<Person>();
             Random rnd = new Random();
-            AmountOfMoney = rnd.Next(100, 1001);
+            AmountOfMoney = rnd.Next(100, 2000);
 
         }
 
