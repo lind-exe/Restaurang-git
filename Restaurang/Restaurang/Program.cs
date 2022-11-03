@@ -14,7 +14,7 @@
             //restaurant.PrintPeople();
             //restaurant.MakeCompanies();
 
-
+            restaurant.Run();
 
 
 

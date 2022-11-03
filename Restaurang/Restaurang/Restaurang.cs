@@ -42,8 +42,7 @@ namespace Restaurant
             MakeWaiters();
             MakeChefs();
             MakeMenu();
-            //MakeCompanies();
-            Run();
+            MakeCompanies();
             DuoTableAmount = duoTableAmount;
             QuadTableAmount = quadTableAmount;
             TimeCounter = 0;
@@ -58,7 +57,19 @@ namespace Restaurant
         }
         public void Run()
         {
-            DrawAnyList<Person>("Table", 15, 20, Chefs);
+            //DrawAnyList<Person>("Chefs", 2, 1, Chefs);
+            //DrawAnyList<Person>("Waiters", 2, 8, Waiters);
+            DrawAnyList<Guest>("Bord 1", 2, 20, Companies[0]);
+            DrawAnyList<Guest>("Bord 2", 20, 20, Companies[1]);
+            DrawAnyList<Guest>("Bord 3", 38, 20, Companies[2]);
+            DrawAnyList<Guest>("Bord 4", 2, 30, Companies[3]);
+            DrawAnyList<Guest>("Bord 5", 20, 30, Companies[4]);
+            DrawAnyList<Guest>("Bord 6", 38, 30, Companies[5]);
+            DrawAnyList<Guest>("Bord 7", 2, 40, Companies[6]);
+            DrawAnyList<Guest>("Bord 8", 20, 40, Companies[7]);
+            DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
+            DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
+
         }
         //Stoppas in sällskapen från Companies i en dictionary av bord
 
@@ -95,7 +106,7 @@ namespace Restaurant
 
             }
 
-            while (Guests.Count > 0)
+            while (Guests.Count > 4)
             {
                 oneCompany.Clear();
                 //if (Guests.Count > 4)
@@ -141,7 +152,7 @@ namespace Restaurant
                 Person chef = new Chef();
                 Chefs.Add(chef);
             }
-            
+
         }
 
         public void MakeMenu()
@@ -199,8 +210,8 @@ namespace Restaurant
 
 
 
-                GUI.Window.Draw(header, fromLeft, fromTop, graphics);
             }
+            GUI.Window.Draw(header, fromLeft, fromTop, graphics);
         }
 
         internal void PrintFood()
