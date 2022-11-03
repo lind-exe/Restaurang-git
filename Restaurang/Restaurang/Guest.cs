@@ -12,18 +12,15 @@ namespace Restaurant
         public double AmountOfMoney { get; set; }
         public int Satisfaction { get; set; }
 
-        public int AmountOfCompany { get; set; }
 
         public bool Eating { get; set; }
 
         public int EatingTime { get; set; }
         public bool FinishedEating { get; set; }
-        public List<Person> Company { get; set; }
 
 
         public Guest()
         {
-            Company = new List<Person>();
             Random rnd = new Random();
             AmountOfMoney = rnd.Next(100, 2000);
 

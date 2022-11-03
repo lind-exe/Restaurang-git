@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Restaurant
         public List<string> NewsFeed { get; set; }
         public List<Food> Menu { get; set; }
         public List<Person> Chefs { get; set; }
-        public List<Person> Companies { get; set; }
+        public List<List<Guest>> Companies { get; set; }
         public Queue Guests { get; set; }
 
         public List<Person> Waiters { get; set; }
@@ -60,26 +61,54 @@ namespace Restaurant
         //Det sparar och addas till en lista av gäster, som stoppas in i en dictionary av bord
 
         //skapa en dictionary med bord
-       
+
         public void MakeCompanies()
         {
             Guests = new Queue();
             Random rnd = new Random();
             int companySize = rnd.Next(1, 5);
-            List <Guest> company = new List<Guest>();
-
+            //int companySize = 4;
+            List<Guest> company = new List<Guest>();
+            Companies = new List<List<Guest>>();
             for (int i = 0; i < GuestAmount; i++)
             {
 
                 Guests.Enqueue(new Guest());
 
             }
-            //while (Guests.Count > 0) {
-            for (int i = 1; i < companySize; i++)
+            while (Guests.Count > 0)
             {
-                company.Add((Guests.Dequeue() as Guest));  
+                if (Guests.Count > 4)
+                {
 
+                    for (int i = 1; i < companySize; i++)
+                    {
+                        company.Add((Guests.Dequeue() as Guest));
+                    Companies.Add(company);
+                    company.Remove(company[i]);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Guests.Count - 1; i++)
+                    {
+                        company.Add((Guests.Dequeue() as Guest));
+
+                    }
+                    Companies.Add(company);
+                    company.Clear();
+                }
+                foreach (List<Guest> c in Companies)
+                {
+                    foreach (Guest g in c)
+                    {
+                        Console.WriteLine(g.Name + " " + g.AmountOfMoney);
+                    }
+                    Console.WriteLine();
+                }
+                Console.ReadKey();
             }
+
 
             //Skapa ny lista Companies plural och lägg in alla separata sällskap i. Companies finns som prop!
         }
