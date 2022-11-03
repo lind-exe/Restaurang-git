@@ -60,7 +60,7 @@ namespace Restaurant
         public void MakeCompanies()
         {
             Guests = new Queue();
-            List<Guest> company = new List<Guest>();
+            List<Guest> oneCompany = new List<Guest>();
             Companies = new List<List<Guest>>();
 
             Random rnd = new Random();
@@ -74,28 +74,31 @@ namespace Restaurant
 
             while (Guests.Count > 0)
             {
-                company.Clear();
+                oneCompany.Clear();
                 //if (Guests.Count > 4)
                 //{
                 int companySize = rnd.Next(1, 4);
 
                 for (int i = 0; i < companySize; i++)
                 {
-                    company.Add(Guests.Dequeue() as Guest);
+                    oneCompany.Add(Guests.Dequeue() as Guest);
                 }
-                Companies.Add(new List<Guest>(company));
+
+                Companies.Add(new List<Guest>(oneCompany));
 
                 int companyIndex = 0;
                 foreach (List<Guest> c in Companies)
                 {
                     companyIndex++;
+                    Console.WriteLine("Sällskap nummer: " + companyIndex);
                     foreach (Guest g in c)
                     {
-                        Console.WriteLine("Sällskap nummer: " + companyIndex + g.Name + " " + g.AmountOfMoney);
+                        Console.WriteLine(g.Name + " som har " + g.AmountOfMoney + " kr i plånboken.");
                     }
                     Console.WriteLine();
                 }
                 Console.ReadKey();
+                Console.Clear();
             }
         }
         private void MakeWaiters()
