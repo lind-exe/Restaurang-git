@@ -66,43 +66,48 @@ namespace Restaurant
         {
             Guests = new Queue();
             Random rnd = new Random();
-            int companySize = rnd.Next(1, 5);
+            
             //int companySize = 4;
             List<Guest> company = new List<Guest>();
             Companies = new List<List<Guest>>();
+
             for (int i = 0; i < GuestAmount; i++)
             {
 
                 Guests.Enqueue(new Guest());
 
             }
+
             while (Guests.Count > 0)
             {
-                if (Guests.Count > 4)
-                {
+                company.Clear();
+                //if (Guests.Count > 4)
+                //{
+                int companySize = rnd.Next(1, 4);
 
-                    for (int i = 1; i < companySize; i++)
-                    {
-                        company.Add((Guests.Dequeue() as Guest));
-                    Companies.Add(company);
-                    company.Remove(company[i]);
-                    }
-                }
-                else
+                for (int i = 0; i < companySize; i++)
                 {
-                    for (int i = 0; i < Guests.Count - 1; i++)
-                    {
-                        company.Add((Guests.Dequeue() as Guest));
-
-                    }
-                    Companies.Add(company);
-                    company.Clear();
+                    company.Add(Guests.Dequeue() as Guest);                   
                 }
+                Companies.Add(new List<Guest>(company));
+                //}
+                //else
+                //{
+                //for (int i = 0; i < Guests.Count - 1; i++)
+                //{
+                //    company.Add((Guests.Dequeue() as Guest));
+
+                //}
+                //Companies.Add(company);
+                //company.Clear();
+                //}
+                int companyIndex = 0;
                 foreach (List<Guest> c in Companies)
                 {
+                    companyIndex++;
                     foreach (Guest g in c)
                     {
-                        Console.WriteLine(g.Name + " " + g.AmountOfMoney);
+                        Console.WriteLine("Sällskap nummer: " + companyIndex + g.Name + " " + g.AmountOfMoney);
                     }
                     Console.WriteLine();
                 }
