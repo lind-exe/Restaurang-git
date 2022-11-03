@@ -55,21 +55,15 @@ namespace Restaurant
 
         }
 
-        //skapa queue med gäster
-
-        //ha en forloop som räknar från 0 - rnd. i loopen har vi en lista med sällskap och gör en dequeue på peopleinrest. rnd ggr.
-        //Det sparar och addas till en lista av gäster, som stoppas in i en dictionary av bord
-
-        //skapa en dictionary med bord
+        //Stoppas in sällskapen från Companies i en dictionary av bord
 
         public void MakeCompanies()
         {
             Guests = new Queue();
-            Random rnd = new Random();
-            
-            //int companySize = 4;
             List<Guest> company = new List<Guest>();
             Companies = new List<List<Guest>>();
+
+            Random rnd = new Random();
 
             for (int i = 0; i < GuestAmount; i++)
             {
@@ -87,20 +81,10 @@ namespace Restaurant
 
                 for (int i = 0; i < companySize; i++)
                 {
-                    company.Add(Guests.Dequeue() as Guest);                   
+                    company.Add(Guests.Dequeue() as Guest);
                 }
                 Companies.Add(new List<Guest>(company));
-                //}
-                //else
-                //{
-                //for (int i = 0; i < Guests.Count - 1; i++)
-                //{
-                //    company.Add((Guests.Dequeue() as Guest));
 
-                //}
-                //Companies.Add(company);
-                //company.Clear();
-                //}
                 int companyIndex = 0;
                 foreach (List<Guest> c in Companies)
                 {
@@ -113,9 +97,6 @@ namespace Restaurant
                 }
                 Console.ReadKey();
             }
-
-
-            //Skapa ny lista Companies plural och lägg in alla separata sällskap i. Companies finns som prop!
         }
         private void MakeWaiters()
         {
@@ -135,7 +116,6 @@ namespace Restaurant
                 Chefs.Add(chef);
             }
         }
-
 
         public void MakeMenu()
         {
