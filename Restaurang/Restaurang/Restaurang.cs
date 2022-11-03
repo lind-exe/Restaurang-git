@@ -40,7 +40,7 @@ namespace Restaurant
             MakeWaiters();
             MakeChefs();
             MakeMenu();
-            MakeGuests();
+            MakeCompanies();
             DuoTableAmount = duoTableAmount;
             QuadTableAmount = quadTableAmount;
             TimeCounter = 0;
@@ -61,7 +61,7 @@ namespace Restaurant
 
         //skapa en dictionary med bord
        
-        public void MakeGuests()
+        public void MakeCompanies()
         {
             Guests = new Queue();
             Random rnd = new Random();

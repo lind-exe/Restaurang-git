@@ -12,7 +12,7 @@
 
             //restaurant.PrintFood();
             //restaurant.PrintPeople();
-            restaurant.MakeGuests();
+            restaurant.MakeCompanies();
             
         }
 
