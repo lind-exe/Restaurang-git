@@ -13,7 +13,10 @@ namespace Restaurant
         public int Quality { get; set; }
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; }
-        public int TipCounter { get; set; }     //osäkert vart denna ska ligga.
+        public int TipCounter { get; set; }
+        public List<Guest> GuestsAtTable { get; set; }
+
+        //osäkert vart denna ska ligga.
 
         //Dictionary med personer som sitter vid det
 
@@ -22,30 +25,27 @@ namespace Restaurant
 
 
 
-        public Table()
-        {           
-            Size = 0;
+        public Table(int size)
+        {
+            Size = size;
         }
 
-        //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        //{
-        //    string[] graphics = new string[anyList.Count];
+        public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        {
+            string[] graphics = new string[anyList.Count];
 
-        //    for (int i = 0; i < anyList.Count; i++)
-        //    {
+            for (int i = 0; i < anyList.Count; i++)
+            {
 
-        //        if (anyList[i] is Table)
-        //        {
-        //            graphics[i] = (anyList[i] as Table).Size;
-        //        }
+                if (anyList[i] is Chef)
+                {
+                    graphics[i] = (anyList[i] as Chef).Name;
+                }
 
-        //        if (anyList[i] is Movie)
-        //        {
-        //            graphics[i] = (anyList[i] as Movie).Title + "(" + (anyList[i] as Movie).PlayingTime + " min)";
-        //        }
-        //    }
 
-        //    GUI.Window.Draw(header, fromLeft, fromTop, graphics);
-        //}
+
+                GUI.Window.Draw(header, fromLeft, fromTop, graphics);
+            }
+        }
     }
 }

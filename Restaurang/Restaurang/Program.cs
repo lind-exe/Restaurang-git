@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             Restaurant restaurant = new Restaurant(80, 5, 3, 5, 5); //Gäster, kockar, servitörer, 2bord, 4bord
-
+            
             TestGuest testGuest = new TestGuest();
 
             //testGuest.PrintMe();
@@ -13,8 +13,7 @@
             //restaurant.PrintFood();
             //restaurant.PrintPeople();
             restaurant.MakeCompanies();
-            
-        }
+            restaurant.MakeC
 
 
 

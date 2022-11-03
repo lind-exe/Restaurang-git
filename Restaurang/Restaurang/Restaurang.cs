@@ -26,8 +26,9 @@ namespace Restaurant
         public List<string> NewsFeed { get; set; }
         public List<Food> Menu { get; set; }
         public List<Person> Chefs { get; set; }
-        public List<List<Guest>> Companies { get; set; }
+        public List<List<Guest>> Companies { get; set; }//ska vi använda Queue av listor
         public Queue Guests { get; set; }
+        public Dictionary<string, Table> Tables { get; set; }
 
         public List<Person> Waiters { get; set; }
 
@@ -54,8 +55,29 @@ namespace Restaurant
         {
 
         }
-
+        public void Run()
+        {
+            Table.DrawAnyList<Table>("Table", 15, 20, Chefs);
+        }
         //Stoppas in sällskapen från Companies i en dictionary av bord
+
+
+        //public void MakeTables() // skapar alla tomma bord
+        //{
+        //    Tables = new Dictionary<string, Table>();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        if (i < 5)
+        //        {
+        //            Tables.Add("Table " +i , new Table(2));
+        //        }
+        //        else
+        //        {
+        //            Tables.Add("Table " +i, new Table(4));
+        //        }
+        //    }
+
+        //}
 
         public void MakeCompanies()
         {
@@ -118,6 +140,7 @@ namespace Restaurant
                 Person chef = new Chef();
                 Chefs.Add(chef);
             }
+            Table.DrawAnyList<>("Table", 15, 20, Chefs);
         }
 
         public void MakeMenu()
