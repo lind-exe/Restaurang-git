@@ -30,22 +30,22 @@ namespace Restaurant
             Size = size;
         }
 
-        public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        {
-            string[] graphics = new string[anyList.Count];
+        //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        //{
+        //    string[] graphics = new string[anyList.Count];
 
-            for (int i = 0; i < anyList.Count; i++)
-            {
+        //    for (int i = 0; i < anyList.Count; i++)
+        //    {
 
-                if (anyList[i] is Chef)
-                {
-                    graphics[i] = (anyList[i] as Chef).Name;
-                }
+        //        if (anyList[i] is Chef)
+        //        {
+        //            graphics[i] = (anyList[i] as Chef).Name;
+        //        }
 
 
 
-                GUI.Window.Draw(header, fromLeft, fromTop, graphics);
-            }
-        }
+        //        GUI.Window.Draw(header, fromLeft, fromTop, graphics);
+        //    }
+        //}
     }
 }

@@ -42,7 +42,8 @@ namespace Restaurant
             MakeWaiters();
             MakeChefs();
             MakeMenu();
-            MakeCompanies();
+            //MakeCompanies();
+            Run();
             DuoTableAmount = duoTableAmount;
             QuadTableAmount = quadTableAmount;
             TimeCounter = 0;
@@ -57,7 +58,7 @@ namespace Restaurant
         }
         public void Run()
         {
-            Table.DrawAnyList<Table>("Table", 15, 20, Chefs);
+            DrawAnyList<Person>("Table", 15, 20, Chefs);
         }
         //Stoppas in sällskapen från Companies i en dictionary av bord
 
@@ -109,18 +110,18 @@ namespace Restaurant
                 Companies.Add(new List<Guest>(oneCompany));
 
                 int companyIndex = 0;
-                foreach (List<Guest> c in Companies)
-                {
-                    companyIndex++;
-                    Console.WriteLine("Sällskap nummer: " + companyIndex);
-                    foreach (Guest g in c)
-                    {
-                        Console.WriteLine(g.Name + " som har " + g.AmountOfMoney + " kr i plånboken.");
-                    }
-                    Console.WriteLine();
-                }
-                Console.ReadKey();
-                Console.Clear();
+                //foreach (List<Guest> c in Companies)
+                //{
+                //    companyIndex++;
+                //    Console.WriteLine("Sällskap nummer: " + companyIndex);
+                //    foreach (Guest g in c)
+                //    {
+                //        Console.WriteLine(g.Name + " som har " + g.AmountOfMoney + " kr i plånboken.");
+                //    }
+                //    Console.WriteLine();
+                //}
+                //Console.ReadKey();
+                //Console.Clear();
             }
         }
         private void MakeWaiters()
@@ -140,7 +141,7 @@ namespace Restaurant
                 Person chef = new Chef();
                 Chefs.Add(chef);
             }
-            Table.DrawAnyList<>("Table", 15, 20, Chefs);
+            
         }
 
         public void MakeMenu()
@@ -182,6 +183,24 @@ namespace Restaurant
                     Console.WriteLine(p.Name + " som har " + ((Chef)p).Skills + " i kompetens");
                     //Console.WriteLine();
                 }
+        }
+
+        public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        {
+            string[] graphics = new string[anyList.Count];
+
+            for (int i = 0; i < anyList.Count; i++)
+            {
+
+                if (anyList[i] is Person)
+                {
+                    graphics[i] = (anyList[i] as Person).Name;
+                }
+
+
+
+                GUI.Window.Draw(header, fromLeft, fromTop, graphics);
+            }
         }
 
         internal void PrintFood()
