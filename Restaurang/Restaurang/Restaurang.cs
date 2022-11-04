@@ -91,7 +91,7 @@ namespace Restaurant
         //    Console.WriteLine("Bord 1's kvalitet är: " + Tables["Bord 1"].Quality);
         //}
 
-        //public void SeatAtTable(List<Guest> oneCompany) 
+        //public void SeatAtTable(List<Guest>oneCompany) 
         //{
         //    List<Guest> guestsAtTable = new List<Guest>();
 
@@ -236,23 +236,23 @@ namespace Restaurant
                 }
         }
 
-        //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        //{
-        //    string[] graphics = new string[anyList.Count];
+        public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        {
+            string[] graphics = new string[anyList.Count];
 
-        //    for (int i = 0; i < anyList.Count; i++)
-        //    {
+            for (int i = 0; i < anyList.Count; i++)
+            {
 
-        //        if (anyList[i] is Person)
-        //        {
-        //            graphics[i] = (anyList[i] as Person).Name;
-        //        }
+                if (anyList[i] is Person)
+                {
+                    graphics[i] = (anyList[i] as Person).Name;
+                }
 
 
 
-        //    }
-        //    GUI.Window.Draw(header, fromLeft, fromTop, graphics);
-        //}
+            }
+            GUI.Window.Draw(header, fromLeft, fromTop, graphics);
+        }
 
         internal void PrintFood()
         {
