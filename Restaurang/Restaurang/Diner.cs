@@ -74,19 +74,19 @@ namespace Restaurant
             //DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
             //DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 20; i++)
             {
                 if (PlaceCompanyAtTable(Companies[0]))
                 {
                     GuestsInRestaurant += Companies[0].Count;
+                    Companies.Remove(Companies[0]);
                 }
-               // Console.ReadLine();
-                Companies.Remove(Companies[0]);
-            PrintTables();
+                Console.ReadLine();
+                PrintTables();
             }
-            
 
-            
+
+
             //Console.SetCursorPosition(50, 1);
             //Console.WriteLine(Companies.Count);
 
@@ -104,9 +104,9 @@ namespace Restaurant
             {
                 int tableNumber = tableCount++;
                 string tableName = "Bord " + tableNumber;
-                if (i >= QuadTableAmount) tableSize = 4;
+                if (i >= DuoTableAmount) tableSize = 4;
                 int tableXpos = (i % 3) * 18 + 2;  // (i%3) * 18 ger 0, 18, 36
-                int tableYpos = (i % 5) * 5 + 10; // (i%5) * 10 ger 0, 5, 10, 15, 20
+                int tableYpos = (i % 5) * 5 + 12; // (i%5) * 10 ger 0, 5, 10, 15, 20
 
                 // Lägg in bordet i stora listan med namnet som nyckel
                 Tables.Add(tableName, new Table(tableName, tableSize, tableXpos, tableYpos, tableNumber));
@@ -212,6 +212,7 @@ namespace Restaurant
             for (int i = 0; i < Tables.Count; i++)
             {
                 Table.DrawMe(Tables.ElementAt(i).Value);
+
             }
         }
         internal bool PlaceCompanyAtTable(List<Guest> company)
@@ -220,7 +221,7 @@ namespace Restaurant
             int companySize = company.Count;
             for (int i = 0; i < Tables.Count; i++)
             {
-                if (Tables.ElementAt(i).Value.Empty && Tables.ElementAt(i).Value.Size <= companySize)
+                if (Tables.ElementAt(i).Value.Size >= companySize && Tables.ElementAt(i).Value.Empty)
                 {
                     Table.SeatCompany(Tables.ElementAt(i).Value, company);
                     return true;
