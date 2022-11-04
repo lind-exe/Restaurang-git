@@ -32,7 +32,7 @@ namespace Restaurant
 
         public List<Person> Waiters { get; set; }
 
-
+        
 
         public Restaurant(int guestAmount, int chefAmount, int waiterAmount, int duoTableAmount, int quadTableAmount)
         {
@@ -59,7 +59,7 @@ namespace Restaurant
         {
             //DrawAnyList<Person>("Chefs", 2, 1, Chefs);
             //DrawAnyList<Person>("Waiters", 2, 8, Waiters);
-            DrawAnyList<Guest>("Bord 1", 2, 20, Companies[0]);
+            //DrawAnyList<Table>(Tables[bord 1].Name, 2, 20, Companies[0]);
             DrawAnyList<Guest>("Bord 2", 20, 20, Companies[1]);
             DrawAnyList<Guest>("Bord 3", 38, 20, Companies[2]);
             DrawAnyList<Guest>("Bord 4", 2, 30, Companies[3]);
@@ -73,23 +73,47 @@ namespace Restaurant
         }
         //Stoppas in sällskapen från Companies i en dictionary av bord
 
-
-        //public void MakeTables() // skapar alla tomma bord
+        //public void MakeTablesOneByOne()
         //{
         //    Tables = new Dictionary<string, Table>();
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        if (i < 5)
-        //        {
-        //            Tables.Add("Table " +i , new Table(2));
-        //        }
-        //        else
-        //        {
-        //            Tables.Add("Table " +i, new Table(4));
-        //        }
-        //    }
 
+        //    Tables.Add("Bord 1", new Table(2));
+        //    Tables.Add("Bord 2", new Table(2));
+        //    Tables.Add("Bord 3", new Table(2));
+        //    Tables.Add("Bord 4", new Table(2));
+        //    Tables.Add("Bord 5", new Table(2));
+        //    Tables.Add("Bord 6", new Table(4));
+        //    Tables.Add("Bord 7", new Table(4));
+        //    Tables.Add("Bord 8", new Table(4));
+        //    Tables.Add("Bord 9", new Table(4));
+        //    Tables.Add("Bord 10", new Table(4));
+
+        //    Console.WriteLine("Bord 1's kvalitet är: " + Tables["Bord 1"].Quality);
         //}
+
+        public void MakeTablesWithLoops() // skapar alla tomma bord
+        {
+            Tables = new Dictionary<string, Table>();
+            for (int i = 0; i < 10; i++)
+            {
+                if (i < 5)
+                {
+                    Tables.Add($"Table {i + 1}", new Table(2));
+                }
+                else
+                {
+                    Tables.Add($"Table {i + 1}", new Table(4));
+                }
+            }
+
+            Console.WriteLine("Bord 1's kvalitet är: " + Tables["Table 1"].Quality);
+            Console.WriteLine("Bord 6's bordsstorlek är: " + Tables["Table 6"].Size);
+            Console.WriteLine("Bord 5 är rent: " + Tables["Table 5"].IsClean);
+            Console.WriteLine("Bord 10 är tomt: " + Tables["Table 10"].Empty);
+            Console.WriteLine("Bord 1's kvalitet är: " + Tables["Table 1"].Quality);
+            Console.WriteLine("Bord 3's bordsstorlek är: " + Tables["Table 3"].Size);
+            Console.WriteLine("Bord 7's bordsgäster är: " + Tables["Table 7"].GuestsAtTable);
+        }
 
         public void MakeCompanies()
         {
@@ -120,7 +144,7 @@ namespace Restaurant
 
                 Companies.Add(new List<Guest>(oneCompany));
 
-                int companyIndex = 0;
+                //int companyIndex = 0;
                 //foreach (List<Guest> c in Companies)
                 //{
                 //    companyIndex++;

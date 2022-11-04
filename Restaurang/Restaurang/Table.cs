@@ -9,10 +9,10 @@ namespace Restaurant
     internal class Table : Restaurant
     {
         public int Size { get; set; }
-        public int Number { get; set; }
+        //public int Number { get; set; }
         public int Quality { get; set; }
         public bool Empty { get; set; } = true;
-        public bool IsClean { get; set; }
+        public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
 
@@ -27,7 +27,12 @@ namespace Restaurant
 
         public Table(int size)
         {
+            Random rnd = new Random();
             Size = size;
+            
+            Quality = rnd.Next(1, 5);
+            GuestsAtTable = new List<Guest>();
+
         }
 
         //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
