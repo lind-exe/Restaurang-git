@@ -91,6 +91,22 @@ namespace Restaurant
         //    Console.WriteLine("Bord 1's kvalitet är: " + Tables["Bord 1"].Quality);
         //}
 
+        //public void SeatAtTable(List<Guest> oneCompany) 
+        //{
+        //    List<Guest> guestsAtTable = new List<Guest>();
+
+        //    foreach (KeyValuePair<string, Table> kvp in Tables)
+        //    {
+        //        if (kvp.Value.Empty && kvp.Value.IsClean)
+        //        {
+        //            if((guestsAtTable.Count >2) & (kvp.Value.Size == 4))
+        //            {
+        //                guestsAtTable.Add(oneCompany);
+        //            }
+        //        }
+        //    }
+        //}
+
         public void MakeTablesWithLoops() // skapar alla tomma bord
         {
             Tables = new Dictionary<string, Table>();
