@@ -74,12 +74,21 @@ namespace Restaurant
             //DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
             //DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
 
-            if (PlaceCompanyAtTable(Companies[0]))
+            for (int i = 0; i < 11; i++)
             {
-                GuestsInRestaurant += Companies[0].Count;
-            }
-
+                if (PlaceCompanyAtTable(Companies[0]))
+                {
+                    GuestsInRestaurant += Companies[0].Count;
+                }
+               // Console.ReadLine();
+                Companies.Remove(Companies[0]);
             PrintTables();
+            }
+            
+
+            
+            //Console.SetCursorPosition(50, 1);
+            //Console.WriteLine(Companies.Count);
 
         }
         //Stoppas in sällskapen från Companies i en dictionary av bord
@@ -125,7 +134,7 @@ namespace Restaurant
                 oneCompany.Clear();
                 //if (Guests.Count > 4)
                 //{
-                int companySize = rnd.Next(1, 4);
+                int companySize = rnd.Next(1, 5);
 
                 for (int i = 0; i < companySize; i++)
                 {
@@ -221,23 +230,23 @@ namespace Restaurant
             return false;
         }
 
-        public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        {
-            string[] graphics = new string[anyList.Count];
+        //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        //{
+        //    string[] graphics = new string[anyList.Count];
 
-            for (int i = 0; i < anyList.Count; i++)
-            {
+        //    for (int i = 0; i < anyList.Count; i++)
+        //    {
 
-                if (anyList[i] is Person)
-                {
-                    graphics[i] = (anyList[i] as Person).Name;
-                }
+        //        if (anyList[i] is Person)
+        //        {
+        //            graphics[i] = (anyList[i] as Person).Name;
+        //        }
 
 
 
-            }
-            GUI.Window.Draw(header, fromLeft, fromTop, graphics);
-        }
+        //    }
+        //    GUI.Window.Draw(header, fromLeft, fromTop, graphics);
+        //}
 
         internal void PrintFood()
         {

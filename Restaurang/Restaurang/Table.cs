@@ -9,14 +9,14 @@ namespace Restaurant
     internal class Table
     {
         public string Name { get; set; } = "Template";
-        public int Xpos { get; set; } = 0;
-        public int Ypos { get; set; } = 0;
-        public int Size { get; set; } = 2;
-        public int Number { get; set; } = 0;
-        public int Quality { get; set; } = 1;
+        public int Xpos { get; set; }
+        public int Ypos { get; set; }
+        public int Size { get; set; }
+        public int Number { get; set; }
+        public int Quality { get; set; }
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; } = true;
-        public int TipCounter { get; set; } = 0;
+        public int TipCounter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
 
         //osäkert vart denna ska ligga.
