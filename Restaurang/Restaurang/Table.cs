@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Restaurant
 {
-    internal class Table : Restaurant
+    internal class Table
     {
-        public int Size { get; set; }
-        //public int Number { get; set; }
-        public int Quality { get; set; }
+        public string Name { get; set; } = "Template";
+        public int Xpos { get; set; } = 0;
+        public int Ypos { get; set; } = 0;
+        public int Size { get; set; } = 2;
+        public int Number { get; set; } = 0;
+        public int Quality { get; set; } = 1;
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; } = true;
-        public int TipCounter { get; set; }
+        public int TipCounter { get; set; } = 0;
         public List<Guest> GuestsAtTable { get; set; }
 
         //osäkert vart denna ska ligga.
@@ -21,36 +24,48 @@ namespace Restaurant
         //Dictionary med personer som sitter vid det
 
         //public List<string> ThingsOnTable { get; set; }  //inväntar onsdagens lektion innan vi går vidare med detta.
-
-
-
-
-        public Table(int size)
+        public Table()
         {
-            Random rnd = new Random();
-            Size = size;
-            
-            Quality = rnd.Next(1, 5);
-            GuestsAtTable = new List<Guest>();
 
         }
 
-        //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        //{
-        //    string[] graphics = new string[anyList.Count];
-
-        //    for (int i = 0; i < anyList.Count; i++)
-        //    {
-
-        //        if (anyList[i] is Chef)
-        //        {
-        //            graphics[i] = (anyList[i] as Chef).Name;
-        //        }
 
 
+        public Table(string name, int size, int xPos, int yPos, int number)
+        {
+            Name = name;
+            Size = size;
+            Xpos = xPos;
+            Ypos = yPos;
+            Number = number;
+        }
+        public static void DrawMe(Table table)
+        {
+            if (!table.Empty)
+            {
+                int companySize = table.GuestsAtTable.Count;
+                string[] graphics = new string[companySize];
 
-        //        GUI.Window.Draw(header, fromLeft, fromTop, graphics);
-        //    }
-        //}
+                for (int i = 0; i < companySize; i++)
+                {
+                    if (table.GuestsAtTable[i] is Person)
+                    {
+                        graphics[i] = (table.GuestsAtTable[i] as Person).Name;
+                    }
+                }
+                GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
+            }
+            else
+            {
+                string[] graphics = new string[1];
+                graphics[0] = "Empty";
+                GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
+            }
+        }
+        public static void SeatCompany(Table table, List<Guest> company)
+        {
+            table.GuestsAtTable = company;
+            table.Empty = false;
+        }
     }
 }
