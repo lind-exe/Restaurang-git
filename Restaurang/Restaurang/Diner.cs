@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using static Restaurant.Person;
 
 namespace Restaurant
 {
-    internal class Restaurant
+    internal class Diner
     {
         public int TotalGuests { get; set; }
         public int GuestAmount { get; set; }
@@ -32,26 +33,29 @@ namespace Restaurant
 
         public List<Person> Waiters { get; set; }
 
-        
 
-        public Restaurant(int guestAmount, int chefAmount, int waiterAmount, int duoTableAmount, int quadTableAmount)
+
+        public Diner(int guestAmount, int chefAmount, int waiterAmount, int duoTableAmount, int quadTableAmount)
         {
             GuestAmount = guestAmount;
             ChefAmount = chefAmount;
             WaiterAmount = waiterAmount;
+            DuoTableAmount = duoTableAmount;
+            QuadTableAmount = quadTableAmount;
+
             MakeWaiters();
             MakeChefs();
             MakeMenu();
+            MakeTables();
             MakeCompanies();
-            DuoTableAmount = duoTableAmount;
-            QuadTableAmount = quadTableAmount;
+
             TimeCounter = 0;
             TotalGuests = 0; //Counter. När 80 gäster kommit in så serveras inga fler gäster för kvällen.
             GuestsInRestaurant = 0; //Får vara max 30 i restaurangen samtidigt.
             NewsFeed = new List<string>();
 
         }
-        public Restaurant()
+        public Diner()
         {
 
         }
@@ -59,76 +63,46 @@ namespace Restaurant
         {
             //DrawAnyList<Person>("Chefs", 2, 1, Chefs);
             //DrawAnyList<Person>("Waiters", 2, 8, Waiters);
-            //DrawAnyList<Table>(Tables[bord 1].Name, 2, 20, Companies[0]);
-            DrawAnyList<Guest>("Bord 2", 20, 20, Companies[1]);
-            DrawAnyList<Guest>("Bord 3", 38, 20, Companies[2]);
-            DrawAnyList<Guest>("Bord 4", 2, 30, Companies[3]);
-            DrawAnyList<Guest>("Bord 5", 20, 30, Companies[4]);
-            DrawAnyList<Guest>("Bord 6", 38, 30, Companies[5]);
-            DrawAnyList<Guest>("Bord 7", 2, 40, Companies[6]);
-            DrawAnyList<Guest>("Bord 8", 20, 40, Companies[7]);
-            DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
-            DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
+            //DrawAnyList<Guest>("Bord 1", 2, 20, Companies[0]);
+            //DrawAnyList<Guest>("Bord 2", 20, 20, Companies[1]);
+            //DrawAnyList<Guest>("Bord 3", 38, 20, Companies[2]);
+            //DrawAnyList<Guest>("Bord 4", 2, 30, Companies[3]);
+            //DrawAnyList<Guest>("Bord 5", 20, 30, Companies[4]);
+            //DrawAnyList<Guest>("Bord 6", 38, 30, Companies[5]);
+            //DrawAnyList<Guest>("Bord 7", 2, 40, Companies[6]);
+            //DrawAnyList<Guest>("Bord 8", 20, 40, Companies[7]);
+            //DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
+            //DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
+
+            if (PlaceCompanyAtTable(Companies[0]))
+            {
+                GuestsInRestaurant += Companies[0].Count;
+            }
+
+            PrintTables();
 
         }
         //Stoppas in sällskapen från Companies i en dictionary av bord
 
-        //public void MakeTablesOneByOne()
-        //{
-        //    Tables = new Dictionary<string, Table>();
 
-        //    Tables.Add("Bord 1", new Table(2));
-        //    Tables.Add("Bord 2", new Table(2));
-        //    Tables.Add("Bord 3", new Table(2));
-        //    Tables.Add("Bord 4", new Table(2));
-        //    Tables.Add("Bord 5", new Table(2));
-        //    Tables.Add("Bord 6", new Table(4));
-        //    Tables.Add("Bord 7", new Table(4));
-        //    Tables.Add("Bord 8", new Table(4));
-        //    Tables.Add("Bord 9", new Table(4));
-        //    Tables.Add("Bord 10", new Table(4));
-
-        //    Console.WriteLine("Bord 1's kvalitet är: " + Tables["Bord 1"].Quality);
-        //}
-
-        //public void SeatAtTable(List<Guest>oneCompany) 
-        //{
-        //    List<Guest> guestsAtTable = new List<Guest>();
-
-        //    foreach (KeyValuePair<string, Table> kvp in Tables)
-        //    {
-        //        if (kvp.Value.Empty && kvp.Value.IsClean)
-        //        {
-        //            if((guestsAtTable.Count >2) & (kvp.Value.Size == 4))
-        //            {
-        //                guestsAtTable.Add(oneCompany);
-        //            }
-        //        }
-        //    }
-        //}
-
-        public void MakeTablesWithLoops() // skapar alla tomma bord
+        public void MakeTables() // skapar alla tomma bord
         {
             Tables = new Dictionary<string, Table>();
-            for (int i = 0; i < 10; i++)
+            int tableCount = 1;
+            int tableSize = 2;
+
+            for (int i = 0; i < DuoTableAmount + QuadTableAmount; i++)
             {
-                if (i < 5)
-                {
-                    Tables.Add($"Table {i + 1}", new Table(2));
-                }
-                else
-                {
-                    Tables.Add($"Table {i + 1}", new Table(4));
-                }
+                int tableNumber = tableCount++;
+                string tableName = "Bord " + tableNumber;
+                if (i >= QuadTableAmount) tableSize = 4;
+                int tableXpos = (i % 3) * 18 + 2;  // (i%3) * 18 ger 0, 18, 36
+                int tableYpos = (i % 5) * 5 + 10; // (i%5) * 10 ger 0, 5, 10, 15, 20
+
+                // Lägg in bordet i stora listan med namnet som nyckel
+                Tables.Add(tableName, new Table(tableName, tableSize, tableXpos, tableYpos, tableNumber));
             }
 
-            Console.WriteLine("Bord 1's kvalitet är: " + Tables["Table 1"].Quality);
-            Console.WriteLine("Bord 6's bordsstorlek är: " + Tables["Table 6"].Size);
-            Console.WriteLine("Bord 5 är rent: " + Tables["Table 5"].IsClean);
-            Console.WriteLine("Bord 10 är tomt: " + Tables["Table 10"].Empty);
-            Console.WriteLine("Bord 1's kvalitet är: " + Tables["Table 1"].Quality);
-            Console.WriteLine("Bord 3's bordsstorlek är: " + Tables["Table 3"].Size);
-            Console.WriteLine("Bord 7's bordsgäster är: " + Tables["Table 7"].GuestsAtTable);
         }
 
         public void MakeCompanies()
@@ -160,19 +134,8 @@ namespace Restaurant
 
                 Companies.Add(new List<Guest>(oneCompany));
 
-                //int companyIndex = 0;
-                //foreach (List<Guest> c in Companies)
-                //{
-                //    companyIndex++;
-                //    Console.WriteLine("Sällskap nummer: " + companyIndex);
-                //    foreach (Guest g in c)
-                //    {
-                //        Console.WriteLine(g.Name + " som har " + g.AmountOfMoney + " kr i plånboken.");
-                //    }
-                //    Console.WriteLine();
-                //}
-                //Console.ReadKey();
-                //Console.Clear();
+                int companyIndex = 0;
+
             }
         }
         private void MakeWaiters()
@@ -234,6 +197,28 @@ namespace Restaurant
                     Console.WriteLine(p.Name + " som har " + ((Chef)p).Skills + " i kompetens");
                     //Console.WriteLine();
                 }
+        }
+        internal void PrintTables()
+        {
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                Table.DrawMe(Tables.ElementAt(i).Value);
+            }
+        }
+        internal bool PlaceCompanyAtTable(List<Guest> company)
+        {
+
+            int companySize = company.Count;
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables.ElementAt(i).Value.Empty && Tables.ElementAt(i).Value.Size <= companySize)
+                {
+                    Table.SeatCompany(Tables.ElementAt(i).Value, company);
+                    return true;
+                }
+
+            }
+            return false;
         }
 
         public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)

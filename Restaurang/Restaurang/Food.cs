@@ -45,11 +45,5 @@ namespace Restaurant
             {
             }
         }
-        //internal void PrintMe()
-        //{
-        //    Console.WriteLine(Name + " " + Price + " kr");           
-        //    Console.WriteLine();
-        //}
-
     }
 }
