@@ -135,7 +135,7 @@ namespace Restaurant
                 //if (Guests.Count > 4)
                 //{
                 int companySize = rnd.Next(1, 5);
-
+                //villkor för antal
                 for (int i = 0; i < companySize; i++)
                 {
                     oneCompany.Add(Guests.Dequeue() as Guest);
