@@ -27,7 +27,7 @@ namespace Restaurant
         public int TimeCounter { get; set; }
         public int GuestsInRestaurant { get; set; }
         public List<string> NewsFeed { get; set; }
-        public List<Food> Menu { get; set; }
+        public static List<Food> Menu { get; set; }
         public List<Person> Chefs { get; set; }
         public List<List<Guest>> Companies { get; set; }//ska vi använda Queue av listor
         public Queue Guests { get; set; }
@@ -64,17 +64,25 @@ namespace Restaurant
         public void Run()
         {
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (PlaceCompanyAtTable(Companies[0]))
                 {
                     GuestsInRestaurant += Companies[0].Count;
                     Companies.Remove(Companies[0]);
                 }
-                Console.ReadLine();
-                PrintTables();
+               // Console.ReadLine();
+               // PrintTables();
+                
+
+
             }
 
+
+        }
+        public void PrintList()
+        {
+            
         }
 
 
@@ -216,7 +224,7 @@ namespace Restaurant
 
             }
         }
-        internal bool PlaceCompanyAtTable(List<Guest> company)
+        internal bool PlaceCompanyAtTable(List<Guest> company)   //En waiter behövs sättas in här
         {
 
             int companySize = company.Count;
@@ -224,22 +232,23 @@ namespace Restaurant
             {
                 if (Tables.ElementAt(i).Value.Size >= companySize && Tables.ElementAt(i).Value.Empty)
                 {
-                    Table.SeatCompany(Tables.ElementAt(i).Value, company);
+                    Table.SeatCompany(Tables.ElementAt(i).Value, waiter, company);
                     return true;
                 }
 
             }
             return false;
         }
-        public void OrderFromMenu(Table table, List<Guest> company)
+        public static void OrderFromMenu(List<Guest> company)
         {
+            Table table = new Table();
             table.GuestsAtTable = company;
             Random rnd = new Random();
 
             foreach (Guest g in company)
             {
                 //g.FoodChoice.Enqueue(Menu[rnd.Next(0, 10)] as Food);  Om Vi vill lägga till förrätt och efterrätt, använd queue/list
-                g.FoodChoice = Menu[rnd.Next(0, 10)];
+                g.FoodChoice = Menu[rnd.Next(1, 9)];
             }
             //Öka tid med ett?
         }
@@ -256,7 +265,7 @@ namespace Restaurant
         //    }
         //}
 
-        public void TakeFoodOrderFromGuest(Table table, Waiter waiter, List<Guest> company)
+        public static void TakeFoodOrderFromGuest(Table table, Waiter waiter, List<Guest> company)
         {
             table.GuestsAtTable = company;
             foreach (Guest g in company)
@@ -267,17 +276,19 @@ namespace Restaurant
             //Öka tid med ett?
         }
 
-        public void GiveOrderToChef(Waiter waiter, Chef chef)
+        public static void GiveOrderToChef(Waiter waiter)
         {
             foreach(object o in waiter.Orders)
             {
-                chef.WorkOrder.Enqueue(waiter.Orders.Dequeue()); 
+                ((Chef)o).WorkOrder.Enqueue(waiter.Orders.Dequeue()); 
             }
             //Öka tid med ett?
         }
 
-        public void GiveFoodFromChefToWaitor(Waiter waiter, Chef chef)
+        public static void GiveFoodFromChefToWaiter(Waiter waiter, Chef chef)
         {
+
+            //waiter.Orders.Enqueue(chef.WorkOrder.Dequeue());
             foreach (object o in chef.WorkOrder)
             {
                 waiter.Orders.Enqueue(chef.WorkOrder.Dequeue());

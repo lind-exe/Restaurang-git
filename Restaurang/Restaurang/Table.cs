@@ -62,10 +62,17 @@ namespace Restaurant
                 GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
             }
         }
-        public static void SeatCompany(Table table, List<Guest> company)
+        public static void SeatCompany(Table table, Waiter waiter, List<Guest> company)
         {
             table.GuestsAtTable = company;
             table.Empty = false;
+            Diner.OrderFromMenu(company);
+            Diner.TakeFoodOrderFromGuest(table, waiter, company);
+            foreach (Guest guest in company)
+            {
+               // Console.SetCursorPosition(40, 1);
+                Console.WriteLine(guest.FoodChoice.Name + " " + guest.FoodChoice.Price);
+            }
         }
 
         public void CompanyEating()
