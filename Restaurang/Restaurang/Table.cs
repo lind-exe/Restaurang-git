@@ -18,16 +18,12 @@ namespace Restaurant
         public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
+        
         public bool Eating { get; set; }
 
         public int EatingTime { get; set; }
         public bool FinishedEating { get; set; }
-
-        //osäkert vart denna ska ligga.
-
-        //Dictionary med personer som sitter vid det
-
-        //public List<string> ThingsOnTable { get; set; }  //inväntar onsdagens lektion innan vi går vidare med detta.
+        public List<Food> FoodOnTable { get; set; }  
         public Table()
         {
 
@@ -72,7 +68,7 @@ namespace Restaurant
             table.Empty = false;
         }
 
-        public void EatingGuest()
+        public void CompanyEating()
         {
             if (Eating == false && FinishedEating == false)
             {

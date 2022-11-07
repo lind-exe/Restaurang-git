@@ -8,7 +8,8 @@ namespace Restaurant
 {
     internal class Guest : Person
     {
-        public Queue<Food> FoodChoice = new Queue<Food>();
+        //public Queue<Food> FoodChoice = new Queue<Food>(); Om Vi vill lägga till förrätt och efterrätt, använd queue/list
+        public Food FoodChoice { get; set; }
         public double AmountOfMoney { get; set; }
         public int Satisfaction { get; set; }
 

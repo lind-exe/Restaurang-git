@@ -17,6 +17,7 @@ namespace Restaurant
 {
     internal class Diner
     {
+        //TIMER TILL ALLA METODER?
         public int TotalGuests { get; set; }
         public int GuestAmount { get; set; }
         public int ChefAmount { get; set; }
@@ -116,7 +117,7 @@ namespace Restaurant
             {
                 oneCompany.Clear();
                 int companySize = rnd.Next(1, 5);
-                if (Guests.Count >=4)
+                if (Guests.Count >= 4)
                 {
 
                     for (int i = 0; i < companySize; i++)
@@ -162,15 +163,15 @@ namespace Restaurant
         {
             Menu = new List<Food>
             {
-                new Meat("Plankstek", 339),
-                new Meat("Pasta Carbonara", 229.50),
-                new Meat("Fläskfilé", 289.50),
-                new Fish("Sushi", 198.90),
-                new Fish("Fiskgratäng", 209.50),
-                new Fish("Panerad rödspätta", 229),
-                new Vego("Vegoschnitzel med pommes", 199),
-                new Vego("Kronärtskockspizza", 179.50),
-                new Vego("Vegetarisk bolognese (linser)", 239)
+                new Meat("Plankstek", 339, 0),
+                new Meat("Pasta Carbonara", 229.50, 0),
+                new Meat("Fläskfilé", 289.50, 0),
+                new Fish("Sushi", 198.90, 0),
+                new Fish("Fiskgratäng", 209.50, 0),
+                new Fish("Panerad rödspätta", 229, 0),
+                new Vego("Vegoschnitzel med pommes", 199, 0),
+                new Vego("Kronärtskockspizza", 179.50, 0),
+                new Vego("Vegetarisk bolognese (linser)", 239, 0)
             };
         }
 
@@ -184,14 +185,14 @@ namespace Restaurant
                 Console.WriteLine("Grupp nummer: " + gruppIndex);
                 foreach (Guest g in c)
                 {
-                    Console.WriteLine("Guest nummer: "+ guestIndex +((Guest)g).Name + " som har " + ((Guest)g).AmountOfMoney + " kr i plånboken");
+                    Console.WriteLine("Guest nummer: " + guestIndex + ((Guest)g).Name + " som har " + ((Guest)g).AmountOfMoney + " kr i plånboken");
                     guestIndex++;
                 }
                 gruppIndex++;
                 Console.WriteLine();
-               
+
             }
-                
+
             Console.WriteLine("\n**SERVERINGSPERSONAL**");
             foreach (Person p in Waiters)
                 if (p is Waiter)
@@ -230,18 +231,71 @@ namespace Restaurant
             }
             return false;
         }
-        public static void OrderFromMenu(Table table, List<Guest> company)
+        public void OrderFromMenu(Table table, List<Guest> company)
         {
-            
-
             table.GuestsAtTable = company;
             Random rnd = new Random();
+
             foreach (Guest g in company)
             {
-
-                g.FoodChoice.Enqueue(Menu[rnd.Next(0, 10)] as Food);
+                //g.FoodChoice.Enqueue(Menu[rnd.Next(0, 10)] as Food);  Om Vi vill lägga till förrätt och efterrätt, använd queue/list
+                g.FoodChoice = Menu[rnd.Next(0, 10)];
             }
+            //Öka tid med ett?
         }
+
+        //public void WaiterActions() //Lägga allt i constructor så att alla waiters får dessa steg?
+        //{
+        //    if (Waiter is Available)
+        //    {
+        //        TakeFoodOrderFromGuest();
+        //        GiveOrderToChef();
+        //        ServeFoodToGuests();
+        //        CleanTable();
+
+        //    }
+        //}
+
+        public void TakeFoodOrderFromGuest(Table table, Waiter waiter, Food food, List<Guest> company)
+        {
+            table.GuestsAtTable = company;
+            foreach (Guest g in company)
+            {
+                waiter.Orders.Enqueue(g.FoodChoice);
+                g.FoodChoice.Quality += waiter.ServiceLevel;               
+            }          
+            //Öka tid med ett?
+        }
+
+        public void GiveOrderToChef()
+        {
+            //Flytta innehåll i Waiter.OrderList till Chef.CookingList
+            // Öka FoodQuality med Chef.Skills
+            //Öka tid med ett?
+        }
+
+        public void GiveFoodFromChefToWaitor()
+        {
+            //Flytta innehåll i Chef.CookingList till Waiter.OrderList
+            //Öka tid med ett?
+        }
+
+        public void ServeFoodToGuests()
+        {
+            //Flytta innehåll från Waiter.Orderlist till Table.FoodOnTable
+            //När FoodOnTable > 0. Ändra Eating till true
+            //Öka tid med ett?
+        }
+        public void PayForFood()
+        {
+            //Villkor för dricks
+            //Vem har ätit vad och vad kostade det
+            //Har gästen pengar till enbart rätten?
+            //Har gästen pengar till både rätt och dricks?
+            //Har gästen inte pengar ens till rätten = diska
+
+        }
+
 
         //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         //{

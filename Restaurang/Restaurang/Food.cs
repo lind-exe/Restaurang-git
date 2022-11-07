@@ -12,36 +12,39 @@ namespace Restaurant
     {
         public string Name { get; set; }
         public double Price { get; set; }
+        public int Quality { get; set; }
 
 
-        public Food(string name, double price)
+
+        public Food(string name, double price, int quality)
 
         {
             Name = name;
             Price = price;
+            Quality = quality;  
         }
-        public Food()
-        {
+        //public Food()
+        //{
 
-        }
+        //}
 
 
         internal class Meat : Food
         {
-            internal Meat(string name, double price) : base(name, price)
+            internal Meat(string name, double price, int quality) : base(name, price, quality)
             {
             }
         }
 
         internal class Fish : Food
         {
-            internal Fish(string name, double price) : base(name, price)
+            internal Fish(string name, double price, int quality) : base(name, price, quality)
             { }
         }
 
         internal class Vego : Food
         {
-            internal Vego(string name, double price) : base(name, price)
+            internal Vego(string name, double price, int quality) : base(name, price, quality)
             {
             }
         }
