@@ -129,22 +129,30 @@ namespace Restaurant
 
             }
 
-            while (Guests.Count > 4)
+            while (Guests.Count > 0)
             {
                 oneCompany.Clear();
-                //if (Guests.Count > 4)
-                //{
                 int companySize = rnd.Next(1, 5);
-                //villkor för antal
-                for (int i = 0; i < companySize; i++)
+                if (Guests.Count >=4)
                 {
-                    oneCompany.Add(Guests.Dequeue() as Guest);
+
+                    for (int i = 0; i < companySize; i++)
+                    {
+                        oneCompany.Add(Guests.Dequeue() as Guest);
+                    }
+
+                    Companies.Add(new List<Guest>(oneCompany));
+
                 }
+                else
+                {
+                    for (int i = 0; i <= Guests.Count; i++)
+                    {
+                        oneCompany.Add(Guests.Dequeue() as Guest);
+                    }
 
-                Companies.Add(new List<Guest>(oneCompany));
-
-                int companyIndex = 0;
-
+                    Companies.Add(new List<Guest>(oneCompany));
+                }
             }
         }
         private void MakeWaiters()
@@ -185,13 +193,22 @@ namespace Restaurant
 
         internal void PrintPeople()
         {
+            int gruppIndex = 1;
+            int guestIndex = 1;
             Console.WriteLine("**GÄSTER**");
-            foreach (object o in Guests)
-                if (o is Guest)
+            foreach (List<Guest> c in Companies)
+            {
+                Console.WriteLine("Grupp nummer: " + gruppIndex);
+                foreach (Guest g in c)
                 {
-                    Console.WriteLine(((Guest)o).Name + " som har " + ((Guest)o).AmountOfMoney + " kr i plånboken");
-                    //Console.WriteLine();
+                    Console.WriteLine("Guest nummer: "+ guestIndex +((Guest)g).Name + " som har " + ((Guest)g).AmountOfMoney + " kr i plånboken");
+                    guestIndex++;
                 }
+                gruppIndex++;
+                Console.WriteLine();
+               
+            }
+                
             Console.WriteLine("\n**SERVERINGSPERSONAL**");
             foreach (Person p in Waiters)
                 if (p is Waiter)

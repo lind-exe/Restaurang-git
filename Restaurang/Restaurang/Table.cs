@@ -18,6 +18,10 @@ namespace Restaurant
         public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
+        public bool Eating { get; set; }
+
+        public int EatingTime { get; set; }
+        public bool FinishedEating { get; set; }
 
         //osäkert vart denna ska ligga.
 
@@ -66,6 +70,28 @@ namespace Restaurant
         {
             table.GuestsAtTable = company;
             table.Empty = false;
+        }
+
+        public void EatingGuest()
+        {
+            if (Eating == false && FinishedEating == false)
+            {
+                Eating = true;
+            }
+        }
+
+        public void TimeToEat()
+        {
+            if (Eating == true)
+            {
+
+                EatingTime++;
+            }
+            if (EatingTime == 20)
+            {
+                FinishedEating = true;
+                Eating = false;
+            }
         }
     }
 }
