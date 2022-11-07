@@ -256,35 +256,46 @@ namespace Restaurant
         //    }
         //}
 
-        public void TakeFoodOrderFromGuest(Table table, Waiter waiter, Food food, List<Guest> company)
+        public void TakeFoodOrderFromGuest(Table table, Waiter waiter, List<Guest> company)
         {
             table.GuestsAtTable = company;
             foreach (Guest g in company)
             {
                 waiter.Orders.Enqueue(g.FoodChoice);
-                g.FoodChoice.Quality += waiter.ServiceLevel;               
+            //    g.FoodChoice.Quality += waiter.ServiceLevel;               
             }          
             //Öka tid med ett?
         }
 
-        public void GiveOrderToChef()
+        public void GiveOrderToChef(Waiter waiter, Chef chef)
         {
-            //Flytta innehåll i Waiter.OrderList till Chef.CookingList
-            // Öka FoodQuality med Chef.Skills
+            foreach(object o in waiter.Orders)
+            {
+                chef.WorkOrder.Enqueue(waiter.Orders.Dequeue()); 
+            }
             //Öka tid med ett?
         }
 
-        public void GiveFoodFromChefToWaitor()
+        public void GiveFoodFromChefToWaitor(Waiter waiter, Chef chef)
         {
-            //Flytta innehåll i Chef.CookingList till Waiter.OrderList
+            foreach (object o in chef.WorkOrder)
+            {
+                waiter.Orders.Enqueue(chef.WorkOrder.Dequeue());
+                ((Food)o).Quality += chef.Skills;
+            }
             //Öka tid med ett?
         }
 
-        public void ServeFoodToGuests()
+        public void ServeFoodToGuests(Waiter waiter, Table table)
         {
-            //Flytta innehåll från Waiter.Orderlist till Table.FoodOnTable
-            //När FoodOnTable > 0. Ändra Eating till true
-            //Öka tid med ett?
+            foreach(object o in waiter.Orders)
+            {
+               table.FoodOnTable.Add(waiter.Orders.Dequeue());
+                ((Food)o).Quality += waiter.ServiceLevel;
+            }
+            table.Eating=true;
+            table.TimeToEat();//Ska detta vara en egen metod?
+           
         }
         public void PayForFood()
         {
