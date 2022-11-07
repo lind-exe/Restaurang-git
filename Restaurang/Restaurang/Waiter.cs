@@ -9,7 +9,7 @@ namespace Restaurant
 {
     internal class Waiter : Person
     {
-        public List<Food> Orders = new List<Food>();
+        public Queue<Food> Orders = new Queue<Food>();
 
         public int ServiceLevel { get; set; }
         public Waiter()

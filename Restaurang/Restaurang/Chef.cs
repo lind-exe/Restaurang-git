@@ -8,7 +8,7 @@ namespace Restaurant
 {
     internal class Chef : Person
     {
-        public List<Food> WorkOrder = new List<Food>();
+        public Queue<Food> WorkOrder = new Queue<Food>();
         public int Skills { get; set; }
         public bool Cooking { get; set; }
         public bool FinishedCooking { get; set; }

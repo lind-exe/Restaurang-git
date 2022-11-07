@@ -8,7 +8,7 @@ namespace Restaurant
 {
     internal class Guest : Person
     {
-        public List<Food> FoodChoice = new List<Food>();
+        public Queue<Food> FoodChoice = new Queue<Food>();
         public double AmountOfMoney { get; set; }
         public int Satisfaction { get; set; }
 

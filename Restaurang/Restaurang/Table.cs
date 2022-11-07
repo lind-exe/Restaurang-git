@@ -43,7 +43,7 @@ namespace Restaurant
             Ypos = yPos;
             Number = number;
         }
-        public static void DrawMe(Table table)
+        public static void DrawMe(Table table)      // Ritar upp alla bord
         {
             if (!table.Empty)
             {
@@ -93,5 +93,6 @@ namespace Restaurant
                 Eating = false;
             }
         }
+       
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
@@ -61,18 +62,6 @@ namespace Restaurant
         }
         public void Run()
         {
-            //DrawAnyList<Person>("Chefs", 2, 1, Chefs);
-            //DrawAnyList<Person>("Waiters", 2, 8, Waiters);
-            //DrawAnyList<Guest>("Bord 1", 2, 20, Companies[0]);
-            //DrawAnyList<Guest>("Bord 2", 20, 20, Companies[1]);
-            //DrawAnyList<Guest>("Bord 3", 38, 20, Companies[2]);
-            //DrawAnyList<Guest>("Bord 4", 2, 30, Companies[3]);
-            //DrawAnyList<Guest>("Bord 5", 20, 30, Companies[4]);
-            //DrawAnyList<Guest>("Bord 6", 38, 30, Companies[5]);
-            //DrawAnyList<Guest>("Bord 7", 2, 40, Companies[6]);
-            //DrawAnyList<Guest>("Bord 8", 20, 40, Companies[7]);
-            //DrawAnyList<Guest>("Bord 9", 38, 40, Companies[8]);
-            //DrawAnyList<Guest>("Bord 10", 2, 50, Companies[9]);
 
             for (int i = 0; i < 20; i++)
             {
@@ -85,13 +74,7 @@ namespace Restaurant
                 PrintTables();
             }
 
-
-
-            //Console.SetCursorPosition(50, 1);
-            //Console.WriteLine(Companies.Count);
-
         }
-        //Stoppas in sällskapen från Companies i en dictionary av bord
 
 
         public void MakeTables() // skapar alla tomma bord
@@ -246,6 +229,18 @@ namespace Restaurant
 
             }
             return false;
+        }
+        public static void OrderFromMenu(Table table, List<Guest> company)
+        {
+            
+
+            table.GuestsAtTable = company;
+            Random rnd = new Random();
+            foreach (Guest g in company)
+            {
+
+                g.FoodChoice.Enqueue(Menu[rnd.Next(0, 10)] as Food);
+            }
         }
 
         //public static void DrawAnyList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
