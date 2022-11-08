@@ -9,13 +9,16 @@ namespace Restaurant
 {
     internal class Waiter : Person
     {
-        public Queue<Food> Orders = new Queue<Food>();
+        public List<Food> Orders = new List<Food>();
 
         public int ServiceLevel { get; set; }
+        public int Busy { get; set; }
+        public int CleaningTime { get; set; }
         public Waiter()
         {
             Random rnd = new Random();
             ServiceLevel = rnd.Next(1, 6);
+            CleaningTime = 3;
         }
 
         //public string TakeOrder(Guest guest)

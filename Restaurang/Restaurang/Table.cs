@@ -38,6 +38,7 @@ namespace Restaurant
             Xpos = xPos;
             Ypos = yPos;
             Number = number;
+            EatingTime = 20;
         }
         public static void DrawMe(Table table)      // Ritar upp alla bord
         {
@@ -66,7 +67,7 @@ namespace Restaurant
         {
             table.GuestsAtTable = company;
             table.Empty = false;
-            Diner.OrderFromMenu(company);
+            Diner.ChooseFromMenu(company);
             Diner.TakeFoodOrderFromGuest(table, waiter, company);
             foreach (Guest guest in company)
             {
@@ -88,9 +89,9 @@ namespace Restaurant
             if (Eating == true)
             {
 
-                EatingTime++;
+                EatingTime--;
             }
-            if (EatingTime == 20)
+            if (EatingTime == 0)
             {
                 FinishedEating = true;
                 Eating = false;

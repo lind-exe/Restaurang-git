@@ -71,9 +71,9 @@ namespace Restaurant
                     GuestsInRestaurant += Companies[0].Count;
                     Companies.Remove(Companies[0]);
                 }
-               // Console.ReadLine();
-               // PrintTables();
-                
+                // Console.ReadLine();
+                // PrintTables();
+
 
 
             }
@@ -82,7 +82,7 @@ namespace Restaurant
         }
         public void PrintList()
         {
-            
+
         }
 
 
@@ -232,14 +232,14 @@ namespace Restaurant
             {
                 if (Tables.ElementAt(i).Value.Size >= companySize && Tables.ElementAt(i).Value.Empty)
                 {
-                    Table.SeatCompany(Tables.ElementAt(i).Value, waiter, company);
+                    Table.SeatCompany(Tables.ElementAt(i).Value,/* waiter,*/ company);
                     return true;
                 }
 
             }
             return false;
         }
-        public static void OrderFromMenu(List<Guest> company)
+        public static void ChooseFromMenu(List<Guest> company)
         {
             Table table = new Table();
             table.GuestsAtTable = company;
@@ -247,66 +247,57 @@ namespace Restaurant
 
             foreach (Guest g in company)
             {
-                //g.FoodChoice.Enqueue(Menu[rnd.Next(0, 10)] as Food);  Om Vi vill lägga till förrätt och efterrätt, använd queue/list
-                g.FoodChoice = Menu[rnd.Next(1, 9)];
+                g.FoodChoice = Menu[rnd.Next(1, Menu.Count)];
             }
             //Öka tid med ett?
         }
 
-        //public void WaiterActions() //Lägga allt i constructor så att alla waiters får dessa steg?
-        //{
-        //    if (Waiter is Available)
-        //    {
-        //        TakeFoodOrderFromGuest();
-        //        GiveOrderToChef();
-        //        ServeFoodToGuests();
-        //        CleanTable();
 
-        //    }
-        //}
 
         public static void TakeFoodOrderFromGuest(Table table, Waiter waiter, List<Guest> company)
         {
             table.GuestsAtTable = company;
             foreach (Guest g in company)
             {
-                waiter.Orders.Enqueue(g.FoodChoice);
-            //    g.FoodChoice.Quality += waiter.ServiceLevel;               
-            }          
+                waiter.Orders.Add(g.FoodChoice);
+                //g.FoodChoice.Quality += waiter.ServiceLevel;
+            }
             //Öka tid med ett?
         }
 
-        public static void GiveOrderToChef(Waiter waiter)
+        public static void GiveOrderToChef(Waiter waiter, Chef chef)
         {
-            foreach(object o in waiter.Orders)
-            {
-                ((Chef)o).WorkOrder.Enqueue(waiter.Orders.Dequeue()); 
-            }
+
+            chef.WorkOrder.AddRange(waiter.Orders);
+            waiter.Orders.Clear();
+
             //Öka tid med ett?
         }
 
         public static void GiveFoodFromChefToWaiter(Waiter waiter, Chef chef)
         {
 
-            //waiter.Orders.Enqueue(chef.WorkOrder.Dequeue());
-            foreach (object o in chef.WorkOrder)
+            foreach (Food food in chef.WorkOrder)
             {
-                waiter.Orders.Enqueue(chef.WorkOrder.Dequeue());
-                ((Food)o).Quality += chef.Skills;
+                food.Quality += (chef.Skills + waiter.ServiceLevel);
             }
+
+            waiter.Orders.AddRange(chef.WorkOrder);
+            chef.WorkOrder.Clear();
+
+
+
             //Öka tid med ett?
         }
 
         public void ServeFoodToGuests(Waiter waiter, Table table)
         {
-            foreach(object o in waiter.Orders)
-            {
-               table.FoodOnTable.Add(waiter.Orders.Dequeue());
-                ((Food)o).Quality += waiter.ServiceLevel;
-            }
-            table.Eating=true;
+            table.FoodOnTable.AddRange(waiter.Orders);
+            waiter.Orders.Clear();
+
+            table.Eating = true;
             table.TimeToEat();//Ska detta vara en egen metod?
-           
+
         }
         public void PayForFood()
         {
