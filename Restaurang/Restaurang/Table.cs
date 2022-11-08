@@ -17,16 +17,20 @@ namespace Restaurant
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
-        public List<Guest> GuestsAtTable { get; set; }
         
+        public int SeatedAt { get; set; }
+        public int OrderAt { get; set; }
+        public int ServedAt { get; set; }
+        public int FinishedAt { get; set; }
+        public bool WaitingToOrder { get; set; }
+        public bool WaitingForFood { get; set; }
         public bool Eating { get; set; }
 
-        public int EatingTime { get; set; }
         public bool FinishedEating { get; set; }
+        public Waiter Waiter { get; set; }
+        public List<Guest> GuestsAtTable { get; set; }
         public List<Food> FoodOnTable { get; set; }
 
-        public int SeatedAt { get; set; }
-        public Waiter Waiter { get; set; }
         public Table()
         {
 
@@ -41,7 +45,6 @@ namespace Restaurant
             Xpos = xPos;
             Ypos = yPos;
             Number = number;
-            EatingTime = 20;
         }
         public static void DrawMe(Table table)      // Ritar upp alla bord
         {
@@ -72,8 +75,8 @@ namespace Restaurant
             table.Empty = false;
             table.SeatedAt = timeCounter;
             table.Waiter = waiter;
-            Diner.ChooseFromMenu(company);
-            Diner.TakeFoodOrderFromGuest(table, waiter, company);
+            //Diner.ChooseFromMenu(company);
+            //Diner.TakeFoodOrderFromGuest(table, waiter, company);
            
         }
 
@@ -85,19 +88,19 @@ namespace Restaurant
             }
         }
 
-        public void TimeToEat()
-        {
-            if (Eating == true)
-            {
+        //public void TimeToEat()
+        //{
+        //    if (Eating == true)
+        //    {
 
-                EatingTime--;
-            }
-            if (EatingTime == 0)
-            {
-                FinishedEating = true;
-                Eating = false;
-            }
-        }
+        //        EatingTime--;
+        //    }
+        //    if (EatingTime == 0)
+        //    {
+        //        FinishedEating = true;
+        //        Eating = false;
+        //    }
+        //}
        
     }
 }

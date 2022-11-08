@@ -68,13 +68,28 @@ namespace Restaurant
             while (true)
             {
                 FetchAndPlaceCompany();
+                TakeOrder();
+                PlaceOrder();
                 Console.Clear();
+                PrintNews();
                 PrintTables();
                 Console.ReadLine();
-                
+
+
             }
 
 
+        }
+
+        internal void PrintNews()
+        {
+            int i = 0;
+            string[] graphics = new string[NewsFeed.Count];
+            foreach (String s in NewsFeed)
+            {
+                graphics[i++] = s;
+            }
+            GUI.Window.Draw("Händelser", 80, 6, graphics);
         }
 
         internal void FetchAndPlaceCompany()
@@ -90,7 +105,7 @@ namespace Restaurant
                     {
                         SeatCompanyAtTable(nextCompany, freeTable, freeWaiter);
                         Companies.Remove(nextCompany);
-                        NewsFeed.Add("Sällskapet har fått bord nummer: ");
+                        NewsFeed.Add("Sällskapet " + nextCompany[0].Name + " har fått " + freeTable.Name);
                     }
                     else
                     {
@@ -108,14 +123,14 @@ namespace Restaurant
         {
             Table.SeatCompany(table, waiter, company, TimeCounter);
             GuestsInRestaurant += company.Count;
-            
+
         }
 
         internal Waiter FindFreeWaiter(List<Waiter> waiters)
         {
-          foreach(Waiter waiter in waiters)
+            foreach (Waiter waiter in waiters)
             {
-                if(waiter.Orders.Count == 0)
+                if (waiter.Orders.Count == 0)
                 {
                     return waiter;
                 }
@@ -140,7 +155,7 @@ namespace Restaurant
 
         public List<Guest> FindNextCompany(List<List<Guest>> companies)
         {
-           if(companies.Count > 0)
+            if (companies.Count > 0)
             {
                 return companies[0];
             }
@@ -318,24 +333,84 @@ namespace Restaurant
 
 
 
-        public static void TakeFoodOrderFromGuest(Table table, Waiter waiter, List<Guest> company)
+        public void TakeOrder()
         {
-            table.GuestsAtTable = company;
-            foreach (Guest g in company)
+            Table waitingTable = FindTableWaitingToOrder();
+            if (waitingTable != null)
             {
-                waiter.Orders.Add(g.FoodChoice);
-                //g.FoodChoice.Quality += waiter.ServiceLevel;
+                waitingTable.OrderAt = TimeCounter;
+                waitingTable.WaitingToOrder = false;
+                waitingTable.WaitingForFood = true;
+
+
+                foreach (Guest g in waitingTable.GuestsAtTable)
+                {
+                    waitingTable.Waiter.Orders.Add(g.FoodChoice);
+
+                }
+                NewsFeed.Add(waitingTable.Waiter.Name + " plockade upp order från " + waitingTable.Name);
             }
             //Öka tid med ett?
         }
 
-        public static void GiveOrderToChef(Waiter waiter, Chef chef)
+        public Table FindTableWaitingToOrder()
         {
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables.ElementAt(i).Value.WaitingToOrder && Tables.ElementAt(i).Value.OrderAt == 0)
+                {
+                    return Tables.ElementAt(i).Value;
+                }
+            }
+            return null;
+        }
 
-            chef.WorkOrder.AddRange(waiter.Orders);
-            waiter.Orders.Clear();
+        internal void PlaceOrder()
+        {
+            Waiter waiter = FindWaiterWithOrder(Waiters);
+            if (waiter != null)
+            {
+                Chef chef = FindFreeChef(Chefs);
+                if (chef != null)
+                {
+                    foreach (Food f in waiter.Orders)
+                    {
+                        chef.WorkOrder.Add(f);
+                        f.Quality += (chef.Skills + waiter.ServiceLevel);
+                    }
+                    waiter.Orders.Clear();
+                    NewsFeed.Add("Kocken " + chef.Name + " får order från " + waiter.Name);
+                }
+
+            }
 
             //Öka tid med ett?
+        }
+
+        internal Chef FindFreeChef(List<Chef> chefs)
+        {
+            foreach (Chef chef in chefs)
+            {
+                if (chef.WorkOrder.Count == 0)
+                {
+                    return chef;
+                }
+            }
+            return null;
+        }
+
+        internal Waiter FindWaiterWithOrder(List<Waiter> waiters)
+        {
+            foreach (Waiter waiter in waiters)
+            {
+                if (waiter.Orders.Count > 0)
+                {
+                    return waiter;
+
+                }
+
+            }
+            return null;
         }
 
         public static void GiveFoodFromChefToWaiter(Waiter waiter, Chef chef)
@@ -360,7 +435,7 @@ namespace Restaurant
             waiter.Orders.Clear();
 
             table.Eating = true;
-            table.TimeToEat();//Ska detta vara en egen metod?
+            //table.TimeToEat();//Ska detta vara en egen metod?
 
         }
         public void PayForFood()
