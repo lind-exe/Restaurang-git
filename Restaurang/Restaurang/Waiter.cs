@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Restaurant
 {
@@ -13,6 +14,8 @@ namespace Restaurant
 
         public int ServiceLevel { get; set; }
         public int CleaningTime { get; set; }
+        public int IdlePosFromLeft { get; set; }
+
         public Waiter()
         {
             Random rnd = new Random();
@@ -20,24 +23,26 @@ namespace Restaurant
             CleaningTime = 3;
         }
 
-        //public string TakeOrder(Guest guest)
-        //{
-        //    Random rnd = new Random();
-
-        //    //if (guest.FoodChoice.Count > 0 && guest.Eating == false)
-        //    //{
-        //    int randomFoodChoice = rnd.Next(0, guest.FoeodChoi.Count); // Slumpmässigt index
-        //    Thing stolenThing = victim.Belongings[randomThingIndex];
-
-        //    Orders.AddRange(guest.FoodChoice); // Servitören tar allt från gästens menu
-
-        //    guest.FoodChoice.Clear(); // Rensar gästens beställningslista
-
-        //    // Console.WriteLine("Sällskapet beställde " + Menu.GetType().Name);
-
-        //    //return guest.FoodChoice.Name;
-        //    //}
-        //    return "";
-        //}
+        public static void DrawWaiter(Waiter waiter)
+        {
+            int orderSize = waiter.Orders.Count;
+            if (orderSize > 0)
+            {
+                string[] graphics = new string[orderSize + 1];
+                for (int i = 0; i < orderSize; i++)
+                {
+                    graphics[i] = waiter.Orders.ElementAt(i).Name;
+                }
+                graphics[orderSize] = "Upptagen ";
+                GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
+            }
+            else
+            {
+                string[] graphics = new string[1];
+                graphics[0] = "";
+                GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
+                
+            }
+        }
     }
 }

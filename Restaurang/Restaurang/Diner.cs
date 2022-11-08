@@ -35,6 +35,7 @@ namespace Restaurant
         public Dictionary<string, Table> Tables { get; set; }
 
         public List<Waiter> Waiters { get; set; }
+        public int WaiterPlacementFromLeft { get; set; }
 
 
 
@@ -71,13 +72,35 @@ namespace Restaurant
                 TakeOrder();
                 PlaceOrder();
                 Console.Clear();
+                PrintStatus();
                 PrintNews();
                 PrintTables();
+                PrintWaiters();
                 Console.ReadLine();
+                TimeCounter++;
 
 
             }
 
+
+        }
+
+        private void PrintWaiters()
+        {
+            for (int i = 0; i < Waiters.Count; i++)
+            {
+                Waiter.DrawWaiter(Waiters.ElementAt(i));
+            }
+        }
+
+        internal void PrintStatus()
+        {
+            string[] graphics = new string[3];
+            graphics[0] = "Antal gäster    " + GuestsInRestaurant;
+            graphics[1] = "Sälllskap i kö: " + Companies.Count;
+            graphics[2] = "Tid:            " + TimeCounter;
+
+            GUI.Window.Draw("Status", 80, 1, graphics);
 
         }
 
@@ -89,7 +112,7 @@ namespace Restaurant
             {
                 graphics[i++] = s;
             }
-            GUI.Window.Draw("Händelser", 80, 6, graphics);
+            GUI.Window.Draw("Händelser", 80, 8, graphics);
         }
 
         internal void FetchAndPlaceCompany()
@@ -178,10 +201,34 @@ namespace Restaurant
                 if (i >= DuoTableAmount) tableSize = 4;
                 int tableXpos = (i % 3) * 18 + 2;  // (i%3) * 18 ger 0, 18, 36
                 int tableYpos = (i % 5) * 5 + 12; // (i%5) * 10 ger 0, 5, 10, 15, 20
+                //int tableXpos = (i % 3) * 18 + 2;  // (i%3) * 18 ger 0, 18, 36
+                //int tableYpos = (i % 5) * 5 + 12; // (i%5) * 10 ger 0, 5, 10, 15, 20
 
                 // Lägg in bordet i stora listan med namnet som nyckel
                 Tables.Add(tableName, new Table(tableName, tableSize, tableXpos, tableYpos, tableNumber));
             }
+
+            //for (int i = 0; i < DuoTableAmount; i++)
+            //{
+            //    int tableXpos = 0;
+            //    int tableNumber = tableCount++;
+            //    string tableName = "Bord " + tableNumber;
+
+            //    Tables.Add(tableName, new Table(tableName, tableSize, tableXpos, 0, tableNumber));
+            //    tableXpos += 20;
+            //}
+
+            //for (int i = 0; i < QuadTableAmount; i++)
+            //{
+            //    int tableXpos = 0;
+            //    int tableNumber = tableCount++;
+            //    string tableName = "Bord " + tableNumber;
+            //    tableXpos += 10;
+
+            //    Tables.Add(tableName, new Table(tableName, tableSize, tableXpos, 30, tableNumber));
+            //}
+
+
 
         }
 
@@ -232,6 +279,7 @@ namespace Restaurant
             for (int i = 0; i < WaiterAmount; i++)
             {
                 Waiter waiter = new Waiter();
+                waiter.IdlePosFromLeft = i *20;
                 Waiters.Add(waiter);
             }
         }
@@ -332,8 +380,14 @@ namespace Restaurant
         }
 
 
+        internal Food PickRandomFood(List<Food> Menu)
+        {
+            Random rnd = new Random();
+            int foodIndex = rnd.Next(1, Menu.Count);
+            return Menu.ElementAt(foodIndex);
 
-        public void TakeOrder()
+        }
+         void TakeOrder()
         {
             Table waitingTable = FindTableWaitingToOrder();
             if (waitingTable != null)
@@ -342,12 +396,14 @@ namespace Restaurant
                 waitingTable.WaitingToOrder = false;
                 waitingTable.WaitingForFood = true;
 
+                for (int i = 0; i < waitingTable.GuestsAtTable.Count; i++)
+                    waitingTable.Waiter.Orders.Add(PickRandomFood(Menu));
 
-                foreach (Guest g in waitingTable.GuestsAtTable)
-                {
-                    waitingTable.Waiter.Orders.Add(g.FoodChoice);
+                //foreach (Guest g in waitingTable.GuestsAtTable)
+                //{
+                //    waitingTable.Waiter.Orders.Add(g.FoodChoice);
 
-                }
+                //}
                 NewsFeed.Add(waitingTable.Waiter.Name + " plockade upp order från " + waitingTable.Name);
             }
             //Öka tid med ett?

@@ -65,7 +65,7 @@ namespace Restaurant
             else
             {
                 string[] graphics = new string[1];
-                graphics[0] = "Empty";
+                graphics[0] = "Ledigt";
                 GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
             }
         }
