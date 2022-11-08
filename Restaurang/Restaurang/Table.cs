@@ -23,7 +23,10 @@ namespace Restaurant
 
         public int EatingTime { get; set; }
         public bool FinishedEating { get; set; }
-        public List<Food> FoodOnTable { get; set; }  
+        public List<Food> FoodOnTable { get; set; }
+
+        public int SeatedAt { get; set; }
+        public Waiter Waiter { get; set; }
         public Table()
         {
 
@@ -63,17 +66,15 @@ namespace Restaurant
                 GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
             }
         }
-        public static void SeatCompany(Table table, Waiter waiter, List<Guest> company)
+        public static void SeatCompany(Table table, Waiter waiter, List<Guest> company, int timeCounter)
         {
             table.GuestsAtTable = company;
             table.Empty = false;
+            table.SeatedAt = timeCounter;
+            table.Waiter = waiter;
             Diner.ChooseFromMenu(company);
             Diner.TakeFoodOrderFromGuest(table, waiter, company);
-            foreach (Guest guest in company)
-            {
-               // Console.SetCursorPosition(40, 1);
-                Console.WriteLine(guest.FoodChoice.Name + " " + guest.FoodChoice.Price);
-            }
+           
         }
 
         public void CompanyEating()

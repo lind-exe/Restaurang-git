@@ -13,7 +13,6 @@ namespace Restaurant
         //public bool Cooking { get; set; }
         //public bool FinishedCooking { get; set; }
         public int CookingTime { get; set; }
-        public int Busy { get; set; }
 
 
         public Chef()

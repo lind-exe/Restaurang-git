@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -28,12 +29,12 @@ namespace Restaurant
         public int GuestsInRestaurant { get; set; }
         public List<string> NewsFeed { get; set; }
         public static List<Food> Menu { get; set; }
-        public List<Person> Chefs { get; set; }
+        public List<Chef> Chefs { get; set; }
         public List<List<Guest>> Companies { get; set; }//ska vi använda Queue av listor
         public Queue Guests { get; set; }
         public Dictionary<string, Table> Tables { get; set; }
 
-        public List<Person> Waiters { get; set; }
+        public List<Waiter> Waiters { get; set; }
 
 
 
@@ -64,27 +65,90 @@ namespace Restaurant
         public void Run()
         {
 
-            for (int i = 0; i < 10; i++)
+            while (true)
             {
-                if (PlaceCompanyAtTable(Companies[0]))
-                {
-                    GuestsInRestaurant += Companies[0].Count;
-                    Companies.Remove(Companies[0]);
-                }
-                // Console.ReadLine();
-                // PrintTables();
-
-
-
+                FetchAndPlaceCompany();
+                Console.Clear();
+                PrintTables();
+                Console.ReadLine();
+                
             }
 
 
         }
-        public void PrintList()
+
+        internal void FetchAndPlaceCompany()
         {
+            List<Guest> nextCompany = FindNextCompany(Companies);
+            if (nextCompany != null)
+            {
+                Table freeTable = FindFreeTable(nextCompany);
+                if (freeTable != null)
+                {
+                    Waiter freeWaiter = FindFreeWaiter(Waiters);
+                    if (freeWaiter != null)
+                    {
+                        SeatCompanyAtTable(nextCompany, freeTable, freeWaiter);
+                        Companies.Remove(nextCompany);
+                        NewsFeed.Add("Sällskapet har fått bord nummer: ");
+                    }
+                    else
+                    {
+                        NewsFeed.Add("Ingen ledig kypare!");
+                    }
+                }
+                else
+                {
+                    NewsFeed.Add("Inget ledigt bord!");
+                }
+            }
+        }
+
+        internal void SeatCompanyAtTable(List<Guest> company, Table table, Waiter waiter)
+        {
+            Table.SeatCompany(table, waiter, company, TimeCounter);
+            GuestsInRestaurant += company.Count;
+            
+        }
+
+        internal Waiter FindFreeWaiter(List<Waiter> waiters)
+        {
+          foreach(Waiter waiter in waiters)
+            {
+                if(waiter.Orders.Count == 0)
+                {
+                    return waiter;
+                }
+            }
+            return null;
+        }
+
+        public Table FindFreeTable(List<Guest> company)
+        {
+            int companySize = company.Count;
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables.ElementAt(i).Value.Empty && Tables.ElementAt(i).Value.Size >= companySize)
+                {
+                    return Tables.ElementAt(i).Value;
+                }
+
+            }
+            return null;
 
         }
 
+        public List<Guest> FindNextCompany(List<List<Guest>> companies)
+        {
+           if(companies.Count > 0)
+            {
+                return companies[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public void MakeTables() // skapar alla tomma bord
         {
@@ -149,19 +213,19 @@ namespace Restaurant
         }
         private void MakeWaiters()
         {
-            Waiters = new List<Person>();
+            Waiters = new List<Waiter>();
             for (int i = 0; i < WaiterAmount; i++)
             {
-                Person waiter = new Waiter();
+                Waiter waiter = new Waiter();
                 Waiters.Add(waiter);
             }
         }
         private void MakeChefs()
         {
-            Chefs = new List<Person>();
+            Chefs = new List<Chef>();
             for (int i = 0; i < ChefAmount; i++)
             {
-                Person chef = new Chef();
+                Chef chef = new Chef();
                 Chefs.Add(chef);
             }
 
@@ -202,14 +266,14 @@ namespace Restaurant
             }
 
             Console.WriteLine("\n**SERVERINGSPERSONAL**");
-            foreach (Person p in Waiters)
+            foreach (Waiter p in Waiters)
                 if (p is Waiter)
                 {
                     Console.WriteLine(p.Name + " som har " + ((Waiter)p).ServiceLevel + " i servicenivå");
                     //Console.WriteLine();
                 }
             Console.WriteLine("\n**KOCKAR**");
-            foreach (Person p in Chefs)
+            foreach (Chef p in Chefs)
                 if (p is Chef)
                 {
                     Console.WriteLine(p.Name + " som har " + ((Chef)p).Skills + " i kompetens");
@@ -224,7 +288,7 @@ namespace Restaurant
 
             }
         }
-        internal bool PlaceCompanyAtTable(List<Guest> company)   //En waiter behövs sättas in här
+        internal bool PlaceCompanyAtTable(List<Guest> company, Waiter waiter)   //En waiter behövs sättas in här
         {
 
             int companySize = company.Count;
@@ -232,7 +296,7 @@ namespace Restaurant
             {
                 if (Tables.ElementAt(i).Value.Size >= companySize && Tables.ElementAt(i).Value.Empty)
                 {
-                    Table.SeatCompany(Tables.ElementAt(i).Value,/* waiter,*/ company);
+                    Table.SeatCompany(Tables.ElementAt(i).Value, waiter, company, TimeCounter);
                     return true;
                 }
 
