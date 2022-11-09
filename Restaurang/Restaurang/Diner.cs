@@ -69,28 +69,64 @@ namespace Restaurant
             while (TotalGuests <= 80)
             {
                 FetchAndPlaceCompany();
-                TakeOrder();
-                PlaceOrder();
+                TakeOrderFromTable();
+                GiveOrderToChef();
+                GiveFoodToWaiter();
+                //ServeFoodToGuests();
+                //PayForFood();
+                //CleanTable();
                 Console.Clear();
                 PrintStatus();
                 PrintNews();
+                Console.WriteLine();
                 PrintTables();
-                PrintWaiters();
+                //PrintWaiters();
                 Console.ReadLine();
                 TimeCounter++;
-
+                UpdateCounters();
 
             }
 
 
         }
-        private void PrintWaiters()  // version 2
+
+        private void GiveFoodToWaiter()
         {
-            for (int i = 0; i < Waiters.Count; i++)
+            Chef chef = FindChefWithFinishedFood(Chefs);
+
+            if (chef != null)
             {
-                (Waiters.ElementAt(i));
+                Waiter waiter = FindFreeWaiter(Waiters);
+                if (waiter != null)
+                {
+                    //waiter.Order = (chef.Order.Foodorder.Dequeue)
+                    waiter.Order = chef.Order;
+                    waiter.Busy = 1;
+                    chef.Order.FoodOrder.Clear();
+                    chef.Order = null;
+                    chef.Busy = 0;
+                    Table table = waiter.Order.Table;
+                    //table.Order = waiter.Order;
+                    //table.Eating = true;
+                    //waiter.Order.FoodOrder.Clear();
+                    //waiter.Order = null;
+
+                    NewsFeed.Add(TimeCounter + " Servitören " + waiter.Name + " får färdig mat från kocken " + chef.Name + " som ska till " + table.Name);
+                }
+                //else
+                //{
+                //    NewsFeed.Add(TimeCounter + " Ingen ledig servitör som kan hämta mat");
+                //}
             }
         }
+
+        //private void PrintWaiters()  // version 2
+        //{
+        //    for (int i = 0; i < Waiters.Count; i++)
+        //    {
+        //        (Waiters.ElementAt(i));
+        //    }
+        //}
         //private void PrintWaiters()
         //{
         //    for (int i = 0; i < Waiters.Count; i++)
@@ -118,10 +154,10 @@ namespace Restaurant
             {
                 graphics[i++] = s;
             }
-            if (NewsFeed.Count > 20)
-            {
-                NewsFeed.Clear();
-            }
+            //if (NewsFeed.Count > 20)
+            //{
+            //    NewsFeed.Clear();
+            //}
             GUI.Window.Draw("Händelser", 80, 8, graphics);
         }
 
@@ -155,7 +191,7 @@ namespace Restaurant
         internal void SeatCompanyAtTable(List<Guest> company, Table table, Waiter waiter)
         {
             Table.SeatCompany(table, waiter, company, TimeCounter);
-            waiter.Busy = 0;
+            waiter.Busy = 1;
             GuestsInRestaurant += company.Count;
             TotalGuests += company.Count;
 
@@ -398,7 +434,7 @@ namespace Restaurant
             return Menu.ElementAt(foodIndex);
 
         }
-        internal void TakeOrder()
+        internal void TakeOrderFromTable()
         {
             Chef chef = FindFreeChef(Chefs);
             if (chef != null)
@@ -418,7 +454,6 @@ namespace Restaurant
                     foreach (Food f in food)
                     {
                         NewsFeed.Add(f.Name);
-
                     }
                 }
                 //Öka tid med ett?
@@ -437,7 +472,7 @@ namespace Restaurant
             return null;
         }
 
-        internal void PlaceOrder()
+        internal void GiveOrderToChef()
         {
             Waiter waiter = FindWaiterWithOrder(Waiters);
             if (waiter != null)
@@ -453,7 +488,7 @@ namespace Restaurant
                     chef.Busy = 10;
                     waiter.Order.FoodOrder.Clear();
                     waiter.Order = null;
-                    waiter.Busy = 0;
+                    waiter.Busy = 1;
                     NewsFeed.Add(TimeCounter + " Kocken " + chef.Name + " får order från " + chef.Order.Table.Name);
                 }
                 else
@@ -475,10 +510,26 @@ namespace Restaurant
                     return chef;
                 }
             }
-           
+
             return null;
         }
 
+        internal Chef FindChefWithFinishedFood(List<Chef> chefs)
+        {
+            foreach (Chef chef in chefs)
+            {
+
+                if (chef.Order != null && chef.Busy == 0)
+                {
+                    return chef;
+                }
+
+
+
+            }
+
+            return null;
+        }
         internal Waiter FindWaiterWithOrder(List<Waiter> waiters)
         {
             foreach (Waiter waiter in waiters)
@@ -607,19 +658,40 @@ namespace Restaurant
         internal void UpdateCounters()
         {
             foreach (Waiter w in Waiters)
-                if (w.Busy > 0) w.Busy--;
+            {
+                if (w.Busy > 0)
+                {
+                    w.Busy--;
+                }
+            }
+
             foreach (Chef c in Chefs)
-                if (c.Busy > 0) c.Busy--;
-            //for (int i = 0; i < Tables.Count; i++)
-            //{
-            //    if (Tables.ElementAt(i).Value.Eating)
-            //        Tables.ElementAt(i).Value.EatingTime--;
-            //    if (Tables.ElementAt(i).Value.Cleaning > 0)
-            //        Tables.ElementAt(i).Value.Cleaning--;
-            //}
+            {
+                if (c.Busy > 0)
+                {
+                    c.Busy--;
+                }
+            }
+
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables.ElementAt(i).Value.Eating)
+                {
+                    Tables.ElementAt(i).Value.EatingTime--;
+                }
+
+                //    if (Tables.ElementAt(i).Value.Cleaning > 0)
+                //        Tables.ElementAt(i).Value.Cleaning--;
+                //}
+                //if (EatingTime == 0)
+                //{
+                //    FinishedEating = true;
+                //    Eating = false;
+                //}
+
+            }
 
         }
-
     }
 }
 

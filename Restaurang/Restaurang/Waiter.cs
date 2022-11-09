@@ -10,6 +10,8 @@ namespace Restaurant
 {
     internal class Waiter : Person
     {
+        //public Queue<Order> Order { get; set; }
+
         public Order Order { get; set; }
         public int Busy { get; set; }
 
@@ -23,10 +25,7 @@ namespace Restaurant
             ServiceLevel = rnd.Next(1, 6);
             CleaningTime = 3;
         }
-        public void Position()
-        {
-            IdlePosFromLeft = 
-        }
+        
         //public static void DrawWaiter(Waiter waiter)
         //{
         //    if (waiter.Order != null)

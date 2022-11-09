@@ -8,6 +8,7 @@ namespace Restaurant
 {
     internal class Table
     {
+        public int TableId { get; set; }
         public string Name { get; set; } = "Template";
         public int Xpos { get; set; }
         public int Ypos { get; set; }
@@ -17,7 +18,7 @@ namespace Restaurant
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
-        
+
         public int SeatedAt { get; set; }
         public int OrderAt { get; set; }
         public int ServedAt { get; set; }
@@ -25,7 +26,7 @@ namespace Restaurant
         public bool WaitingToOrder { get; set; }
         public bool WaitingForFood { get; set; }
         public bool Eating { get; set; }
-
+        public int EatingTime { get; set; } = 20;
         public bool FinishedEating { get; set; }
         public Waiter Waiter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
@@ -40,11 +41,13 @@ namespace Restaurant
 
         public Table(string name, int size, int xPos, int yPos, int number)
         {
+            Random rnd = new Random();
             Name = name;
             Size = size;
             Xpos = xPos;
             Ypos = yPos;
             Number = number;
+            //TableId = rnd.Next(0, 10000);
         }
         public static void DrawMe(Table table)      // Ritar upp alla bord
         {
@@ -78,24 +81,19 @@ namespace Restaurant
             table.WaitingToOrder = true;
             //Diner.ChooseFromMenu(company);
             //Diner.TakeFoodOrderFromGuest(table, waiter, company);
-           
+
         }
 
-        public void CompanyEating()
-        {
-            if (Eating == false && FinishedEating == false)
-            {
-                Eating = true;
-            }
-        }
+
 
         internal static void TakeOrder(Table table, List<Food> food, int timeCounter)
         {
-            table.Order = new Order(food, table, table.Waiter, timeCounter);
+            Random rnd = new Random();
+            table.Order = new Order(food, table, table.Waiter, timeCounter, rnd.Next(1, 10000));
             table.OrderAt = timeCounter;
             table.WaitingToOrder = false;
             table.WaitingForFood = true;
-            table.Waiter.Busy = 0; // me.Waiter.ServiceLevel;
+            table.Waiter.Busy = 1; // me.Waiter.ServiceLevel;
             table.Waiter.Order = table.Order;
         }
 
@@ -106,12 +104,11 @@ namespace Restaurant
 
         //        EatingTime--;
         //    }
-        //    if (EatingTime == 0)
-        //    {
-        //        FinishedEating = true;
-        //        Eating = false;
-        //    }
+        //if (EatingTime == 0)
+        //{
+        //    FinishedEating = true;
+        //    Eating = false;
         //}
-
     }
+
 }
