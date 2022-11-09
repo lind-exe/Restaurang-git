@@ -75,6 +75,7 @@ namespace Restaurant
             table.Empty = false;
             table.SeatedAt = timeCounter;
             table.Waiter = waiter;
+            table.WaitingToOrder = true;
             //Diner.ChooseFromMenu(company);
             //Diner.TakeFoodOrderFromGuest(table, waiter, company);
            

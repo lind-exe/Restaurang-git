@@ -128,16 +128,16 @@ namespace Restaurant
                     {
                         SeatCompanyAtTable(nextCompany, freeTable, freeWaiter);
                         Companies.Remove(nextCompany);
-                        NewsFeed.Add(TimeCounter + "Sällskapet " + nextCompany[0].Name + " har fått " + freeTable.Name);
+                        NewsFeed.Add(TimeCounter + " Sällskapet " + nextCompany[0].Name + " har fått " + freeTable.Name);
                     }
                     else
                     {
-                        NewsFeed.Add(TimeCounter + "Ingen ledig kypare!");
+                        NewsFeed.Add(TimeCounter + " Ingen ledig kypare!");
                     }
                 }
                 else
                 {
-                    NewsFeed.Add(TimeCounter + "Inget ledigt bord!");
+                    NewsFeed.Add(TimeCounter + " Inget ledigt bord!");
                 }
             }
         }
@@ -439,7 +439,7 @@ namespace Restaurant
                     waiter.Order.FoodOrder.Clear();
                     waiter.Order = null;
                     waiter.Busy = 0;
-                    NewsFeed.Add(TimeCounter + "Kocken " + chef.Name + " får order från " + chef.Order.Table.Name);
+                    NewsFeed.Add(TimeCounter + " Kocken " + chef.Name + " får order från " + chef.Order.Table.Name);
                 }
                 else
                 {
@@ -455,11 +455,12 @@ namespace Restaurant
         {
             foreach (Chef chef in chefs)
             {
-                if (chef.Order == null && chef.Busy == 0)
+                if (chef.Busy == 0 && chef.Order == null)
                 {
                     return chef;
                 }
             }
+           
             return null;
         }
 
