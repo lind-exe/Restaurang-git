@@ -23,27 +23,30 @@ namespace Restaurant
             ServiceLevel = rnd.Next(1, 6);
             CleaningTime = 3;
         }
-
-        public static void DrawWaiter(Waiter waiter)
+        public void Position()
         {
-            if (waiter.Order!= null)
-            {
-                int orderSize = waiter.Order.FoodOrder.Count;
-                string[] graphics = new string[orderSize + 1];
-                for (int i = 0; i < orderSize; i++)
-                {
-                    graphics[i] = waiter.Order.FoodOrder.ElementAt(i).Name;
-                }
-                graphics[orderSize] = waiter.Name +" är upptagen i " + waiter.Busy + " tick ";
-                GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
-            }
-            else
-            {
-                string[] graphics = new string[1];
-                graphics[0] = "";
-                GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
-
-            }
+            IdlePosFromLeft = 
         }
+        //public static void DrawWaiter(Waiter waiter)
+        //{
+        //    if (waiter.Order != null)
+        //    {
+        //        int orderSize = waiter.Order.FoodOrder.Count;
+        //        string[] graphics = new string[orderSize + 1];
+        //        for (int i = 0; i < orderSize; i++)
+        //        {
+        //            graphics[i] = (waiter.Order.FoodOrder.ElementAt(i) as Food).Name;
+        //        }
+        //        graphics[orderSize] = waiter.Name +" är upptagen i " + waiter.Busy + " tick ";
+        //        GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
+        //    }
+        //    else
+        //    {
+        //        string[] graphics = new string[1];
+        //        graphics[0] = "";
+        //        GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
+
+        //    }
+        //}
     }
 }

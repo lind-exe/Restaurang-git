@@ -84,14 +84,20 @@ namespace Restaurant
 
 
         }
-
-        private void PrintWaiters()
+        private void PrintWaiters()  // version 2
         {
             for (int i = 0; i < Waiters.Count; i++)
             {
-                Waiter.DrawWaiter(Waiters.ElementAt(i));
+                (Waiters.ElementAt(i));
             }
         }
+        //private void PrintWaiters()
+        //{
+        //    for (int i = 0; i < Waiters.Count; i++)
+        //    {
+        //        Waiter.DrawWaiter(Waiters.ElementAt(i));
+        //    }
+        //}
 
         internal void PrintStatus()
         {
@@ -111,6 +117,10 @@ namespace Restaurant
             foreach (String s in NewsFeed)
             {
                 graphics[i++] = s;
+            }
+            if (NewsFeed.Count > 20)
+            {
+                NewsFeed.Clear();
             }
             GUI.Window.Draw("Händelser", 80, 8, graphics);
         }
@@ -404,7 +414,12 @@ namespace Restaurant
 
                     Table.TakeOrder(waitingTable, food, TimeCounter);
 
-                    NewsFeed.Add(waitingTable.Waiter.Name + " plockade upp order från " + waitingTable.Name);
+                    NewsFeed.Add(TimeCounter + " Servitör " + waitingTable.Waiter.Name + " plockade upp order från " + waitingTable.Name + " med:");
+                    foreach (Food f in food)
+                    {
+                        NewsFeed.Add(f.Name);
+
+                    }
                 }
                 //Öka tid med ett?
             }
@@ -589,7 +604,21 @@ namespace Restaurant
             //}
 
         }
+        internal void UpdateCounters()
+        {
+            foreach (Waiter w in Waiters)
+                if (w.Busy > 0) w.Busy--;
+            foreach (Chef c in Chefs)
+                if (c.Busy > 0) c.Busy--;
+            //for (int i = 0; i < Tables.Count; i++)
+            //{
+            //    if (Tables.ElementAt(i).Value.Eating)
+            //        Tables.ElementAt(i).Value.EatingTime--;
+            //    if (Tables.ElementAt(i).Value.Cleaning > 0)
+            //        Tables.ElementAt(i).Value.Cleaning--;
+            //}
 
+        }
 
     }
 }
