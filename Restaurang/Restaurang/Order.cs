@@ -8,12 +8,26 @@ namespace Restaurant
 {
     internal class Order
     {
-        public Queue<Food> FoodOrder { get; set; }
-        
+        public List<Food> FoodOrder = new List<Food>(); 
+        public Table Table { get; set; }
+        public Waiter Waiter { get; set; }
+        public Chef Chef { get; set; }
+
+        public int OrderedAt { get; set; }
+        public int CookedAt { get; set; }
+
         public Order()
         {
 
         }
-        
+
+        public Order(List<Food> foodOrder, Table table, Waiter waiter, int timeCounter)
+        {
+            FoodOrder = foodOrder;
+            Table = table;
+            Waiter = waiter;
+            OrderedAt = timeCounter;
+           
+        }
     }
 }

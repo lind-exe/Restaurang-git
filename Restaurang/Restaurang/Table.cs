@@ -29,7 +29,7 @@ namespace Restaurant
         public bool FinishedEating { get; set; }
         public Waiter Waiter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
-        public List<Food> FoodOnTable { get; set; }
+        public Order Order { get; set; }
 
         public Table()
         {
@@ -88,6 +88,16 @@ namespace Restaurant
             }
         }
 
+        internal static void TakeOrder(Table table, List<Food> food, int timeCounter)
+        {
+            table.Order = new Order(food, table, table.Waiter, timeCounter);
+            table.OrderAt = timeCounter;
+            table.WaitingToOrder = false;
+            table.WaitingForFood = true;
+            table.Waiter.Busy = 0; // me.Waiter.ServiceLevel;
+            table.Waiter.Order = table.Order;
+        }
+
         //public void TimeToEat()
         //{
         //    if (Eating == true)
@@ -101,6 +111,6 @@ namespace Restaurant
         //        Eating = false;
         //    }
         //}
-       
+
     }
 }

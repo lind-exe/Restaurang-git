@@ -10,7 +10,8 @@ namespace Restaurant
 {
     internal class Waiter : Person
     {
-        public List<Food> Orders = new List<Food>();
+        public Order Order { get; set; }
+        public int Busy { get; set; }
 
         public int ServiceLevel { get; set; }
         public int CleaningTime { get; set; }
@@ -25,15 +26,15 @@ namespace Restaurant
 
         public static void DrawWaiter(Waiter waiter)
         {
-            int orderSize = waiter.Orders.Count;
-            if (orderSize > 0)
+            if (waiter.Order!= null)
             {
+                int orderSize = waiter.Order.FoodOrder.Count;
                 string[] graphics = new string[orderSize + 1];
                 for (int i = 0; i < orderSize; i++)
                 {
-                    graphics[i] = waiter.Orders.ElementAt(i).Name;
+                    graphics[i] = waiter.Order.FoodOrder.ElementAt(i).Name;
                 }
-                graphics[orderSize] = "Upptagen ";
+                graphics[orderSize] = waiter.Name +" är upptagen i " + waiter.Busy + " tick ";
                 GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
             }
             else
@@ -41,7 +42,7 @@ namespace Restaurant
                 string[] graphics = new string[1];
                 graphics[0] = "";
                 GUI.Window.Draw(waiter.Name, waiter.IdlePosFromLeft, 40, graphics);
-                
+
             }
         }
     }

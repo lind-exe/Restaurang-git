@@ -123,7 +123,10 @@ namespace Restaurant
                 "Norberg",
                 "Lindholm",
                 "Dahl",
-                "Jonasson"
+                "Jonasson",
+                "Elb",
+                "Duro"
+
             };
 
             Random rnd = new Random();
