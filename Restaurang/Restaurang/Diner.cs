@@ -102,7 +102,6 @@ namespace Restaurant
                     //waiter.Order = (chef.Order.Foodorder.Dequeue)
                     waiter.Order = chef.Order;
                     waiter.Busy = 1;
-                    chef.Order.FoodOrder.Clear();
                     chef.Order = null;
                     chef.Busy = 0;
                     Table table = waiter.Order.Table;
@@ -485,8 +484,8 @@ namespace Restaurant
                         f.Quality += (waiter.ServiceLevel + chef.Skills);
                     }
                     chef.Order = waiter.Order;
+                    
                     chef.Busy = 10;
-                    waiter.Order.FoodOrder.Clear();
                     waiter.Order = null;
                     waiter.Busy = 1;
                     NewsFeed.Add(TimeCounter + " Kocken " + chef.Name + " får order från " + chef.Order.Table.Name);
