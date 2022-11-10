@@ -23,12 +23,7 @@ namespace Restaurant
             Price = price;
             Quality = quality;  
         }
-        //public Food()
-        //{
-
-        //}
-
-
+ 
         internal class Meat : Food
         {
             internal Meat(string name, double price, int quality) : base(name, price, quality)
@@ -39,7 +34,8 @@ namespace Restaurant
         internal class Fish : Food
         {
             internal Fish(string name, double price, int quality) : base(name, price, quality)
-            { }
+            { 
+            }
         }
 
         internal class Vego : Food

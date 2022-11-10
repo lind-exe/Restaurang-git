@@ -30,10 +30,5 @@ namespace Restaurant
             OrderedAt = timeCounter;
             OrderId = orderId;
         }
-
-        internal static Order Clone()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

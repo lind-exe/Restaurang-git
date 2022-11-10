@@ -9,16 +9,11 @@ namespace Restaurant
     internal class Person
     {
         public string Name { get; set; }
-        public int Id { get; set; }
 
-
-        
         public Person()
         {
             Name = LastName();
         }
-
-
 
         private static string LastName()
         {
@@ -134,8 +129,6 @@ namespace Restaurant
             int index = rnd.Next(0, lastNames.Length - 1);
 
             return lastNames[index];
-
-
         }
     }
 
