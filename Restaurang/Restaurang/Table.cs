@@ -18,6 +18,7 @@ namespace Restaurant
         public bool Empty { get; set; } = true;
         public bool IsClean { get; set; } = true;
         public int TipCounter { get; set; }
+        public int CleaningTable { get; set; }
 
         public int SeatedAt { get; set; }
         public int OrderAt { get; set; }
@@ -28,6 +29,7 @@ namespace Restaurant
         public bool Eating { get; set; }
         public int EatingTime { get; set; } = 20;
         public bool FinishedEating { get; set; }
+        public bool PaidForFood { get; set; }
         public Waiter Waiter { get; set; }
         public List<Guest> GuestsAtTable { get; set; }
         public Order Order { get; set; }
@@ -51,6 +53,31 @@ namespace Restaurant
         }
         public static void DrawMe(Table table)      // Ritar upp alla bord
         {
+            //if (table.Empty/* && table.IsClean*/)
+            //{
+            //    string[] graphics = new string[1];
+            //    graphics[0] = "";
+            //    GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
+            //}
+            //else
+            //{
+            //    int companySize = table.GuestsAtTable.Count;
+            //    string[] graphics = new string[companySize + 5];
+            //    for (int i = 0; i < companySize; i++)
+            //    {
+            //        if (table.GuestsAtTable[i] is Person)
+            //        {
+            //            graphics[i] = (table.GuestsAtTable[i] as Person).Name;
+            //        }
+            //    }
+            //    //graphics[companySize + 6] = "Ättid: " + table.EatingTime;
+            //    //graphics[companySize + 1] = "Beställde: " + me.OrderAt;
+            //    //graphics[companySize + 2] = "Serverad:" + me.ServedAt;
+            //    //graphics[companySize + 3] = "Ättid: " + me.EatingTime;
+            //    //graphics[companySize + 4] = "Städas: " + me.Cleaning;
+
+            //    GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
+            //}
             if (!table.Empty)
             {
                 int companySize = table.GuestsAtTable.Count;
@@ -63,6 +90,7 @@ namespace Restaurant
                         graphics[i] = (table.GuestsAtTable[i] as Person).Name;
                     }
                 }
+                //graphics[companySize] = "Ättid: " + table.EatingTime;
                 GUI.Window.Draw(table.Name, table.Xpos, table.Ypos, graphics);
             }
             else
